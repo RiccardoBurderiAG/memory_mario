@@ -114,7 +114,7 @@ window.onload = function(){
     let levelCard = JSON.parse(lclStrg);
     /* mettiamo il valore di levelCard vicino al titolo Livello */
 
-    console.log(typeof levelCard);
+    console.log(levelCard);
     /* in questa funzione facciamo in modo che venga preso solo una porzione di cards e lo mescoliamo e poi creiamo i div */
     let slicedCards = cards.slice(0,levelCard);
     shuffleCards(slicedCards);
@@ -128,6 +128,35 @@ window.onload = function(){
         gridElement.id = s.cardId;
         gridCards.appendChild(gridElement);
     });
+    let title = document.querySelector(".header h1");
+    switch (levelCard) {
+        case 12:
+            title.innerHTML += " 1";
+            console.log("Livello 1")
+            break;
+        case 16:
+            title.innerHTML += " 2";
+            console.log("Livello2");
+            break;
+        case 20:
+            title.innerHTML += " 3";
+            console.log("Livello3");
+            break;
+        case 24:
+            title.innerHTML += " 4";
+            console.log("Livello4");
+            break;
+        case 30:
+            title.innerHTML += " 5";
+            console.log("Livello5");
+            break;
+        case 36:
+            title.innerHTML += " 6";
+            console.log("Livello6");
+            break;
+        default:
+            break;
+    }
 }
 
 function Start(){
@@ -155,4 +184,8 @@ function Timer(){
         tmp++;
         timerValue.innerHTML = JSON.stringify(tmp);
     }, 1000);
+}
+
+function goHomeUrDrunk(){
+    window.location.href = "./index.html"
 }

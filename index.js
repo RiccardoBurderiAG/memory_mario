@@ -92,18 +92,6 @@ window.onload = function(){
         myCard.appendChild(myCardTitle);
         myCard.appendChild(myCardActions);
         table.appendChild(myCard);
-/*         <div class="myCard1">
-        <div class="title">
-            <h1>Livello 1(12)</h1>
-        </div>
-        <div class="actions">
-            <ul id="12">
-                <li><i class="fas fa-award"></i></li>
-                <li><div class="completed"></div></li>
-                <li><i class="fas fa-chevron-right" onclick="goToLevel(12)"></i></li>
-            </ul>
-        </div>
-        </div> */
     })
     iconAward = document.getElementsByClassName("fa-award");
     console.log(iconAward.length);

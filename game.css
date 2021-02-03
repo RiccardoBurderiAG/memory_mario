@@ -1,3 +1,13 @@
+/* Title Section */
+.header{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.header h1{
+    display: inline;
+}
 /* Game Section */
 .cardGame{
     display: grid;
@@ -25,3 +35,4 @@
     min-width: 75px;
     margin: 5px 20px
 }
+
