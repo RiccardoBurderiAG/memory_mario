@@ -74,7 +74,14 @@ window.onload = function(){
 /* TODO shuffle array */
 function shuffleCards(array){
     console.log("sto mescolando il mazzo", array);
-    //al momento non fa nulla
+    //Durstenfeld shuffle ->ES6  (https://medium.com/@anthonyfuentes/do-the-shuffle-the-durstenfeld-shuffle-7920c2ce0c45)
+    for (var i = array.length - 1 ;i> 0; i--){
+        var j = Math.floor(Math.random()* (i+1));
+/*         var tmp = array[i];
+        array[i] = array[j];
+        array[j] = tmp; */
+        [array[i], array[j]] = [array[j], array[i]]
+    }
     var shuffledDeck = array;
     return shuffledDeck;
 }
