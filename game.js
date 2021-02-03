@@ -131,28 +131,32 @@ window.onload = function(){
     let title = document.querySelector(".header h1");
     switch (levelCard) {
         case 12:
-            title.innerHTML += " 1";
+            title.innerHTML += " 1" + ` (`+levelCard+`)`;
             console.log("Livello 1")
             break;
         case 16:
-            title.innerHTML += " 2";
+            title.innerHTML += " 2" +` (`+levelCard+`)`;
             console.log("Livello2");
             break;
         case 20:
-            title.innerHTML += " 3";
+            title.innerHTML += " 3" +` (`+levelCard+`)`;
             console.log("Livello3");
+            gridCards.style.gridTemplateColumns = "auto auto auto auto auto"
             break;
         case 24:
-            title.innerHTML += " 4";
+            title.innerHTML += " 4" +` (`+levelCard+`)`;
             console.log("Livello4");
+            gridCards.style.gridTemplateColumns ="auto auto auto auto auto auto"
             break;
         case 30:
-            title.innerHTML += " 5";
+            title.innerHTML += " 5" +` (`+levelCard+`)`;
             console.log("Livello5");
+            gridCards.style.gridTemplateColumns ="auto auto auto auto auto auto"
             break;
         case 36:
-            title.innerHTML += " 6";
+            title.innerHTML += " 6" +` (`+levelCard+`)`;
             console.log("Livello6");
+            gridCards.style.gridTemplateColumns ="auto auto auto auto auto auto"
             break;
         default:
             break;
