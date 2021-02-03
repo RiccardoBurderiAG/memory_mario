@@ -6,6 +6,7 @@
     <title>Memory-Game</title>
     <link rel="stylesheet" href="index.css">
     <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css" integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p" crossorigin="anonymous"/>
+    <script src="index.js"></script>
 </head>
 <body>
     <!-- header section -->
@@ -15,10 +16,10 @@
     <!-- hero Section -->
     <div class="container">
         <div class="center">
-            <form action="" id="playerName">
+            <form action="" id="playerName" name="playerName">
                 <label for="nome">Nome</label>
                 <input type="text" name="nome">
-                <button type="button">Salva</button>
+                <button type="button" onclick="savePlayer()">Salva</button>
             </form>
         </div>
         <div class="levels">
@@ -27,10 +28,10 @@
                     <h1>Livello 1(12)</h1>
                 </div>
                 <div class="actions">
-                    <ul>
+                    <ul id="12">
                         <li><i class="fas fa-award"></i></li>
                         <li><div class="completed"></div></li>
-                        <li><i class="fas fa-chevron-right" onclick="goToLevele(1)"></i></li>
+                        <li><i class="fas fa-chevron-right" onclick="goToLevel(12)"></i></li>
                     </ul>
                 </div>
             </div>
@@ -38,7 +39,13 @@
                 <div class="title">
                     <h1>Livello 2(16)</h1>
                 </div>
-                <div class="actions"></div>
+                <div class="actions">
+                    <ul id=16>
+                        <li><i class="fas fa-award"></i></li>
+                        <li><div class="completed"></div></li>
+                        <li><i class="fas fa-chevron-right" onclick="goToLevel(16)"></i></li>
+                    </ul>
+                </div>
             </div>
         </div>
     </div>
