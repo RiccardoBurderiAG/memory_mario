@@ -11,11 +11,7 @@ function savePlayer(){
     console.log(name);
     window.localStorage.setItem("playerName", name);
 }
-/* 
-function goToRanks(){
-    //window.location.href = "./ranklist.html";
-    console.log("qui");
-} */
+
 /* function that sets the number of cards i want to show in the game page => it will render a number of "val" cards depending on localStorage */
 /* for example i can create the whole 36 cards item and then slice it depending on "val" */
 function useSubSetCards(val){
