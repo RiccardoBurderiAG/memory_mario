@@ -24,6 +24,12 @@ var cards = [
         cardId :3
     },
     {
+        cardId :4
+    },
+    {
+        cardId :4
+    },
+    {
         cardId :5
     },
     {
@@ -120,14 +126,18 @@ window.onload = function(){
     shuffleCards(slicedCards);
     //per ogni card dentro lo slicedCards (mazzo già mescolato) creiamo l elemento e mettiamolo nella grid => <div class="card">ciao</div>
     let gridCards = document.querySelector(".cardGame");
-    slicedCards.map(s=>{
+    slicedCards.map((s,i)=>{
         let gridElement = document.createElement("div");
         let gridInner = document.createTextNode(s.cardId);
         gridElement.appendChild(gridInner);
         gridElement.className = "card";
-        gridElement.id = s.cardId;
+        gridElement.addEventListener("click", function() {
+            clickedCard(i);
+          });
+        gridElement.id = i;
         gridCards.appendChild(gridElement);
     });
+
     let title = document.querySelector(".header h1");
     switch (levelCard) {
         case 12:
@@ -192,4 +202,44 @@ function Timer(){
 
 function goHomeUrDrunk(){
     window.location.href = "./index.html"
+}
+
+var match = [];
+
+let i = 0;
+function clickedCard(id){
+    let card = document.getElementById(id);
+    //quando clicchi una card si flippa
+    card.style.backgroundColor = "red";
+    //idea : potrei gestire lo stato (flipped !flipped) delle card con il localStorage ( consulta erika e raffa )
+    //potrei salvare l id della card che ho cliccato in localStorage e poi per cambiarne lo stile prendo le info sul div dal localStorage
+    console.log(match.length);
+    if(match.length == 2){
+        let card = document.getElementById(id);
+        card.style.backgroundColor = "red";
+        match = [];
+        let clicked1 = document.getElementById(id);
+        match.push(clicked1.innerHTML);
+        i++;
+        console.log(clicked1);
+    }else{
+        let card = document.getElementById(id);
+        card.style.backgroundColor = "red";
+        let clicked1 = document.getElementById(id);
+        match.push(clicked1.innerHTML);
+        console.log(match);
+        i++;
+        console.log(clicked1.innerHTML);
+    }
+
+    if(match[0] == match[1] && match[1]){
+
+        console.log("coppia trovata");
+        console.log(match[0]);
+        console.log(match[1]);
+        //card.style.visibility ="hidden";
+        //fai in modo che le carte non siano più cliccabili -> visibility:hidden
+    }else{
+        //gira indietro le carte
+    }
 }
