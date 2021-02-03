@@ -1,0 +1,82 @@
+*{
+    box-sizing: border-box;
+}
+
+body{
+    margin: 0;
+}
+
+.navbar{
+    display: flex;
+    align-items: flex-start;
+    min-height: 60px;
+    background-color: rgba(51,51,51,0.4);
+}
+.container{
+    margin-right:350px;
+    margin-left:350px;
+    max-width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-content:center;
+    margin-top: 50px;
+}
+
+#logo{
+    max-width: 50px;
+    margin:auto 0px auto 10px;
+}
+/* Player Section */
+
+#playerName{
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+
+}
+#playerName input{
+    min-height: 50px;
+    font-size: 20px;
+    margin: 0px 10px;
+}
+
+#playerName label{
+    position: absolute;
+    top: -21px;
+    left: 10px;
+}
+
+#playerName button{
+    height: 50px;
+    padding: 0px 25px;
+}
+
+/* Levels Section */
+.levels > div{
+    background-color: grey;
+    color: white;
+    padding: 5px 20px;
+    margin: 20px 10px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+
+.actions ul {
+    display: flex;
+    list-style-type: none;
+}
+
+@media screen and (max-width: 1024px){
+    .container{
+        margin-right:150px;
+        margin-left:150px;
+        max-width: 100%;
+        display: flex;
+        flex-direction: column;
+        align-content:center;
+        margin-top: 50px;
+    }
+}

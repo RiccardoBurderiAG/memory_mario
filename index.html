@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Memory-Game</title>
+    <link rel="stylesheet" href="index.css">
+    <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css" integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p" crossorigin="anonymous"/>
+</head>
+<body>
+    <!-- header section -->
+    <div class="navbar">
+        <img id="logo" src="https://upload.wikimedia.org/wikipedia/commons/7/70/Gulf_logo.png" alt="">
+    </div>
+    <!-- hero Section -->
+    <div class="container">
+        <div class="center">
+            <form action="" id="playerName">
+                <label for="nome">Nome</label>
+                <input type="text" name="nome">
+                <button type="button">Salva</button>
+            </form>
+        </div>
+        <div class="levels">
+            <div class="myCard1">
+                <div class="title">
+                    <h1>Livello 1(12)</h1>
+                </div>
+                <div class="actions">
+                    <ul>
+                        <li><i class="fas fa-award"></i></li>
+                        <li><div class="completed"></div></li>
+                        <li><i class="fas fa-chevron-right" onclick="goToLevele(1)"></i></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="myCard1">
+                <div class="title">
+                    <h1>Livello 2(16)</h1>
+                </div>
+                <div class="actions"></div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
