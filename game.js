@@ -46,6 +46,66 @@ var cards = [
     },
     {
         cardId :8
+    },
+    {
+        cardId :9
+    },
+    {
+        cardId :9
+    },
+    {
+        cardId :10
+    },
+    {
+        cardId :10
+    },
+    {
+        cardId :11
+    },
+    {
+        cardId :11
+    },
+    {
+        cardId :12
+    },
+    {
+        cardId :12
+    },
+    {
+        cardId :13
+    },
+    {
+        cardId :13
+    },
+    {
+        cardId :14
+    },
+    {
+        cardId :14
+    },
+    {
+        cardId :15
+    },
+    {
+        cardId :15
+    },
+    {
+        cardId :16
+    },
+    {
+        cardId :16
+    },
+    {
+        cardId :17
+    },
+    {
+        cardId :17
+    },
+    {
+        cardId :18
+    },
+    {
+        cardId :18
     }
 ]
 
@@ -70,7 +130,9 @@ window.onload = function(){
     });
 }
 
-
+function Start(){
+    Timer();
+}
 /* TODO shuffle array */
 function shuffleCards(array){
     console.log("sto mescolando il mazzo", array);
@@ -84,4 +146,13 @@ function shuffleCards(array){
     }
     var shuffledDeck = array;
     return shuffledDeck;
+}
+
+function Timer(){
+    let timerValue = document.querySelector("table tbody tr td:nth-child(3)");
+    setInterval(function(){
+        let tmp = JSON.parse(timerValue.innerHTML);
+        tmp++;
+        timerValue.innerHTML = JSON.stringify(tmp);
+    }, 1000);
 }
