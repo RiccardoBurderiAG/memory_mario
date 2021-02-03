@@ -207,6 +207,8 @@ function goHomeUrDrunk(){
 var match = [];
 
 let i = 0;
+
+/* TODO add query to get both clicked cards to hide them if matched or flip them */
 function clickedCard(id){
     let card = document.getElementById(id);
     //quando clicchi una card si flippa
@@ -230,16 +232,15 @@ function clickedCard(id){
         console.log(match);
         i++;
         console.log(clicked1.innerHTML);
-    }
+        if(!isNaN(match[1]) && match[0] === match[1]){
+            console.log("coppia trovata");
+            //card.style.visibility ="hidden";
+            //fai in modo che le carte non siano più cliccabili -> visibility:hidden
+        }else if(match.length ==1){
+            //gira indietro le carte 
+        }else{
+            setTimeout(function(){ alert("flippo le card"); }, 3000);
 
-    if(match[0] == match[1] && match[1]){
-
-        console.log("coppia trovata");
-        console.log(match[0]);
-        console.log(match[1]);
-        //card.style.visibility ="hidden";
-        //fai in modo che le carte non siano più cliccabili -> visibility:hidden
-    }else{
-        //gira indietro le carte
+        }
     }
 }
