@@ -118,7 +118,7 @@ var cards = [
 window.onload = function(){
     let lclStrg = window.localStorage.getItem("levelCards");
     let levelCard = JSON.parse(lclStrg);
-    /* mettiamo il valore di levelCard vicino al titolo Livello */
+    //mettiamo il valore di levelCard vicino al titolo Livello
     let slicedCards = cards.slice(0,levelCard);
     shuffleCards(slicedCards);
     //per ogni card dentro lo slicedCards (mazzo già mescolato) creiamo l elemento e mettiamolo nella grid => <div class="card">ciao</div>
@@ -178,9 +178,11 @@ function shuffleCards(array){
     //Durstenfeld shuffle ->ES6  (https://medium.com/@anthonyfuentes/do-the-shuffle-the-durstenfeld-shuffle-7920c2ce0c45)
     for (var i = array.length - 1 ;i> 0; i--){
         var j = Math.floor(Math.random()* (i+1));
-/*         var tmp = array[i];
+    /*
+        var tmp = array[i];
         array[i] = array[j];
-        array[j] = tmp; */
+        array[j] = tmp;
+    */
         [array[i], array[j]] = [array[j], array[i]]
     }
     var shuffledDeck = array;
@@ -208,17 +210,15 @@ var ids = [];
 let i = 0;
 
 /* TODO aggiungi gestione click, si possono cliccare solo 2 card alla volta */
-/* TODO aggiungi salvataggio informazioni partita ( tempo impiegato, numero di mosse ) */
 /* TODO aggiungi link al prossimo livello (modifica il valore di levelCards in base al livello in cui sei così con il link viene impostato anche il numero di card) */
 /* TODO aggiungi gestione div "done" che rappresenta lo stato di superamento di un livello ( salviamo queste info nel localStorage ) */
+/* TODO stop timer when game is over */
+/* TODO calculate best score for player */
 
 function clickedCard(id){
     console.log(i+1); // counter of moves made
     let card = document.getElementById(id);
     //quando clicchi una card si flippa
-
-    //idea : potrei gestire lo stato (flipped !flipped) delle card con il localStorage ( consulta erika e raffa )
-    //potrei salvare l id della card che ho cliccato in localStorage e poi per cambiarne lo stile prendo le info sul div dal localStorage
 
     if(match.length == 2){
         let card = document.getElementById(id);
@@ -271,7 +271,6 @@ function clickedCard(id){
 
     if(match.length == 2){
         document.getElementsByClassName(".card-flipped").pointerEvent = "none";
-
         checkStatusGame(i);
     }
 }
@@ -335,7 +334,7 @@ function saveGame(){
     clearInterval(myTimer);
 }
 
-/* funzione che facilita la scrittura in localStorage => name e value devono essere stringhe */
+// funzione che facilita la scrittura in localStorage => name e value devono essere stringhe
 function setLocalStorage(name, value){
     let stringifiedValue = JSON.stringify(value);
     window.localStorage.setItem(name, stringifiedValue);
