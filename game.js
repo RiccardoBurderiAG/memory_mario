@@ -302,23 +302,37 @@ function checkStatusGame(index){
         //qui salviamo queste info nel localStorage come score del giocatore
         saveGame();
     }
-    //complimenti hai finito il gioco
+    //complimenti hai finito la partita
 }
+
 
 
 function saveGame(){
     let playerName = getLocalStorage("playerName"); //stringa
     let timeGame = document.querySelector("tbody tr td:nth-child(3)");    //prendiamo il valore che è stato impostato nella tabella
     let movesGame = document.querySelector("tbody tr td:nth-child(2)");
+    let lvl = getLocalStorage("levelCards");
+    if(playerName == null){
+        var newGame = {
+            "playerName" : "-",
+            "timeGame" : timeGame.innerHTML,
+            "movesGame" : movesGame.innerHTML,
+            "level" : lvl
+        };
+    }else{
+        var newGame = {
+            "playerName" : playerName,
+            "timeGame" : timeGame.innerHTML,
+            "movesGame" : movesGame.innerHTML,
+            "level" : lvl
+        };
+    }
     let gameStrg = getLocalStorage("savedGames");
-    gameStrg.push({
-        "playerName" : playerName[0].name,
-        "timeGame" : timeGame.innerHTML,
-        "movesGame" : movesGame.innerHTML
-    });
+    gameStrg.push(newGame);
     console.log(gameStrg);
     window.localStorage.removeItem("matchingCards");
     setLocalStorage("savedGames", gameStrg);
+    clearInterval(myTimer);
 }
 
 /* funzione che facilita la scrittura in localStorage => name e value devono essere stringhe */
@@ -330,5 +344,6 @@ function setLocalStorage(name, value){
 function getLocalStorage(name){
     let strg = window.localStorage.getItem(name);
     let parsedStrg = JSON.parse(strg);
+    console.log(parsedStrg);
     return parsedStrg;
 }

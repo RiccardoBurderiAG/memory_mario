@@ -35,12 +35,16 @@ function goToLevel(lvl){
 let indexPlayers = 0;
 let x = [];
 
+if(!getLocalStorage("savedGames")){
+    let gameStrg = [];
+    setLocalStorage("savedGames", gameStrg);
+}
 function savePlayer(){
     let name = document.playerName.nome.value;
     console.log(typeof name);
-    x[indexPlayers] = {name};
+ /*    x[indexPlayers] = {name}; */
     indexPlayers++;
-    setLocalStorage("playerName",x);
+    setLocalStorage("playerName",name);
     //fai in modo che salvi una lista di giocatori => ci servirà per la pagina ranklist
 }
 
