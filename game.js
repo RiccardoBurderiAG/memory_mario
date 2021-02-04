@@ -138,6 +138,16 @@ window.onload = function(){
         gridCards.appendChild(gridElement);
     });
 
+    let cardElements = document.querySelectorAll(".cardGame");
+    console.log(cardElements[0].children);
+
+    setTimeout(() => {
+        Array.from(cardElements[0].children).forEach(function (element) {
+            element.classList.add("card-flipped");
+          });
+    }, 4000);
+
+
     let title = document.querySelector(".header h1");
     switch (levelCard) {
         case 12:
@@ -176,7 +186,7 @@ window.onload = function(){
 function Start(){
     Timer();
 }
-/* TODO shuffle array */
+
 function shuffleCards(array){
     console.log("sto mescolando il mazzo", array);
     //Durstenfeld shuffle ->ES6  (https://medium.com/@anthonyfuentes/do-the-shuffle-the-durstenfeld-shuffle-7920c2ce0c45)
@@ -208,12 +218,11 @@ var match = [];
 var ids = [];
 let i = 0;
 
-/* TODO add counter for number of moves and save the value of timer */
 function clickedCard(id){
-    console.log(i);
+    console.log(i); // counter of moves made
     let card = document.getElementById(id);
     //quando clicchi una card si flippa
-    card.style.backgroundColor = "red";
+
     //idea : potrei gestire lo stato (flipped !flipped) delle card con il localStorage ( consulta erika e raffa )
     //potrei salvare l id della card che ho cliccato in localStorage e poi per cambiarne lo stile prendo le info sul div dal localStorage
 
@@ -221,7 +230,7 @@ function clickedCard(id){
     if(match.length == 2){
         let card = document.getElementById(id);
         //flippa la card
-        card.style.backgroundColor = "red";
+        card.classList.remove("card-flipped");
         match = [];
         let clicked1 = document.getElementById(id);
         match.push(clicked1.innerHTML);
@@ -230,7 +239,8 @@ function clickedCard(id){
     }else{
         let card = document.getElementById(id);
         //flippa la card
-        card.style.backgroundColor = "red";
+        //al posto di questo background facciamo flippare le card
+        card.classList.remove("card-flipped");
         let clicked1 = document.getElementById(id);
         match.push(clicked1.innerHTML);
         console.log(match);
@@ -250,7 +260,7 @@ function clickedCard(id){
                     console.log(strgCards[1]);
                     strgCards[1].map(s=>{
                         let x = document.getElementById(s);
-                        x.classList.add("primary");
+                        x.classList.add("card-flipped");
                     })
                 }
             }, 3000);
