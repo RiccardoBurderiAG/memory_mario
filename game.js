@@ -145,7 +145,8 @@ window.onload = function(){
         Array.from(cardElements[0].children).forEach(function (element) {
             element.classList.add("card-flipped");
           });
-    }, 4000);
+        }, 5000);
+/*         myTimer(); */
 
 
     let title = document.querySelector(".header h1");
@@ -201,13 +202,16 @@ function shuffleCards(array){
     return shuffledDeck;
 }
 
-function Timer(){
+
+setTimeout(()=>{
+    var timer = setInterval(myTimer, 1000);
+},5000);
+
+function myTimer(){
     let timerValue = document.querySelector("table tbody tr td:nth-child(3)");
-    setInterval(function(){
-        let tmp = JSON.parse(timerValue.innerHTML);
-        tmp++;
-        timerValue.innerHTML = JSON.stringify(tmp);
-    }, 1000);
+    let tmp = JSON.parse(timerValue.innerHTML);
+    tmp++;
+    timerValue.innerHTML = JSON.stringify(tmp);
 }
 
 function goHomeUrDrunk(){
@@ -217,6 +221,11 @@ function goHomeUrDrunk(){
 var match = [];
 var ids = [];
 let i = 0;
+
+/* TODO aggiungi gestione click, si possono cliccare solo 2 card alla volta */
+/* TODO aggiungi salvataggio informazioni partita ( tempo impiegato, numero di mosse ) */
+/* TODO aggiungi link al prossimo livello (modifica il valore di levelCards in base al livello in cui sei così con il link viene impostato anche il numero di card) */
+/* TODO aggiungi gestione div "done" che rappresenta lo stato di superamento di un livello ( salviamo queste info nel localStorage ) */
 
 function clickedCard(id){
     console.log(i); // counter of moves made
@@ -246,13 +255,13 @@ function clickedCard(id){
         console.log(match);
         i++;
         console.log(clicked1.innerHTML);
+
+
+
         if(!isNaN(match[1]) && match[0] === match[1]){
             console.log("coppia trovata");
-            //card.style.visibility ="hidden";
-            //fai in modo che le carte non siano più cliccabili -> visibility:hidden
-
         }else if(match.length == 1){
-            //flippa le card le carte
+            //flippa le carte
         }else{
             setTimeout(function(){
                  alert("flippo le card");
@@ -284,6 +293,7 @@ function clickedCard(id){
             })
         }
     }, 1000);
+
     if(match.length == 2){
         checkStatusGame();
     }
@@ -299,6 +309,9 @@ function checkStatusGame(){
         let cardGame = document.getElementsByClassName("cardGame");
         let congrat = document.createElement("div");
         let congratText = document.createTextNode("Congratulazioni");
+        //qui devo prendere tutte le info che mi servono per popolare la tabella punteggio
+        //stop timer , set number of moves, best moves number (based on localStorage)
+        clearInterval(timer);
         congrat.appendChild(congratText);
         congrat.style.position = "absolute";
         congrat.style.top = "33%";
