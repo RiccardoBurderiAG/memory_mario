@@ -14,7 +14,7 @@ var levels = [
     },
     {
         id:3,
-        val: 24 
+        val: 24
     },
     {
         id:4,

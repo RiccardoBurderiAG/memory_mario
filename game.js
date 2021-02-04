@@ -188,7 +188,9 @@ function shuffleCards(array){
 }
 
 
-var timer = setInterval(myTimer, 1000);
+var timer = setTimeout(() => {
+    setInterval(myTimer, 1000);
+}, 5000);
 
 function myTimer(){
     let timerValue = document.querySelector("table tbody tr td:nth-child(3)");
@@ -222,6 +224,7 @@ function clickedCard(id){
         let card = document.getElementById(id);
         //flippa la card
         card.classList.remove("card-flipped");
+
         match = [];
         let clicked1 = document.getElementById(id);
         match.push(clicked1.innerHTML);
@@ -229,21 +232,16 @@ function clickedCard(id){
     }else{
         let card = document.getElementById(id);
         //flippa la card
-        //al posto di questo background facciamo flippare le card
         card.classList.remove("card-flipped");
         let clicked1 = document.getElementById(id);
         match.push(clicked1.innerHTML);
         i++;
-
-
-
         if(!isNaN(match[1]) && match[0] === match[1]){
             console.log("coppia trovata");
         }else if(match.length == 1){
             //flippa le carte
         }else{
             setTimeout(function(){
-                 alert("flippo le card");
                  if(match.length == 2 && match[0] != match[1]){
                     strgCards[1].map(s=>{
                         let x = document.getElementById(s);
@@ -266,12 +264,14 @@ function clickedCard(id){
             //in strgCards[1] stanno gli indici delle carte che ho matchato
             strgCards[1].map(s=>{
                 let x = document.getElementById(s);
-                x.classList.add("yellow");
+                x.classList.add("flipped");
             })
         }
     }, 1000);
 
     if(match.length == 2){
+        document.getElementsByClassName(".card-flipped").pointerEvent = "none";
+
         checkStatusGame(i);
     }
 }
@@ -279,7 +279,7 @@ function clickedCard(id){
 //funzione che gestisce la fine del gioco
 function checkStatusGame(index){
     let lvl = getLocalStorage("levelCards");
-    let cards = document.querySelectorAll(".cardGame .yellow");
+    let cards = document.querySelectorAll(".cardGame .flipped");
     if(cards.length == lvl -2){
         let cardGame = document.getElementsByClassName("cardGame");
         let congrat = document.createElement("div");
@@ -298,9 +298,29 @@ function checkStatusGame(index){
 
         let numMoves = document.querySelector("table tbody tr td:nth-child(2)");
         numMoves.innerHTML = index+1;
+
+        //qui salviamo queste info nel localStorage come score del giocatore
+        saveGame();
     }
     //complimenti hai finito il gioco
 }
+
+
+function saveGame(){
+    let playerName = getLocalStorage("playerName"); //stringa
+    let timeGame = document.querySelector("tbody tr td:nth-child(3)");    //prendiamo il valore che è stato impostato nella tabella
+    let movesGame = document.querySelector("tbody tr td:nth-child(2)");
+    let gameStrg = getLocalStorage("savedGames");
+    gameStrg.push({
+        "playerName" : playerName[0].name,
+        "timeGame" : timeGame.innerHTML,
+        "movesGame" : movesGame.innerHTML
+    });
+    console.log(gameStrg);
+    window.localStorage.removeItem("matchingCards");
+    setLocalStorage("savedGames", gameStrg);
+}
+
 /* funzione che facilita la scrittura in localStorage => name e value devono essere stringhe */
 function setLocalStorage(name, value){
     let stringifiedValue = JSON.stringify(value);

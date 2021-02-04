@@ -56,11 +56,14 @@
     margin: 5px 20px
 }
 
-.yellow{
-    background-color: yellow!important;
+.flipped{
     visibility: hidden!important;
 }
 
 .primary{
     background-color: seagreen!important;
+}
+
+.unclickable{
+    pointer-events: none;
 }
