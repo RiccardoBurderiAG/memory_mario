@@ -210,6 +210,7 @@ let i = 0;
 
 /* TODO add counter for number of moves and save the value of timer */
 function clickedCard(id){
+    console.log(i);
     let card = document.getElementById(id);
     //quando clicchi una card si flippa
     card.style.backgroundColor = "red";
@@ -273,8 +274,32 @@ function clickedCard(id){
             })
         }
     }, 1000);
+    if(match.length == 2){
+        checkStatusGame();
+    }
 }
 
+//funzione che gestisce la fine del gioco
+function checkStatusGame(){
+    let lvl = getLocalStorage("levelCards");
+    let cards = document.querySelectorAll(".cardGame .yellow");
+    console.log(cards);
+    if(cards.length == lvl -2){
+        console.log("Congratulations");
+        let cardGame = document.getElementsByClassName("cardGame");
+        let congrat = document.createElement("div");
+        let congratText = document.createTextNode("Congratulazioni");
+        congrat.appendChild(congratText);
+        congrat.style.position = "absolute";
+        congrat.style.top = "33%";
+        congrat.style.left = "33%";
+        congrat.style.fontSize = "40px";
+        setTimeout(function(){
+            cardGame[0].append(congrat);
+        },1500);
+    }
+    //complimenti hai finito il gioco
+}
 /* funzione che facilita la scrittura in localStorage => name e value devono essere stringhe */
 function setLocalStorage(name, value){
     let stringifiedValue = JSON.stringify(value);
