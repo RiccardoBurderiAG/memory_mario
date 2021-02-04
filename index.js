@@ -50,6 +50,7 @@ function savePlayer(){
 
 function goToRanks(lvl){
     //qui prenderemo l oggetto del localStorage corrispondente al lvl (che conterrà nome utente, numero di mosse e tempo => prendili dalla tabella alla fine del livello)
+    window.localStorage.setItem("rankLevel", lvl);
     window.location.href = "./ranklist.html"
 }
 /* function that sets the number of cards i want to show in the game page => it will render a number of "val" cards depending on localStorage */
