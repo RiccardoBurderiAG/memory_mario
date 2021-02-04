@@ -205,19 +205,21 @@ function goHomeUrDrunk(){
 }
 
 var match = [];
-
+var ids = [];
 let i = 0;
 
-/* TODO add query to get both clicked cards to hide them if matched or flip them */
+/* TODO add counter for number of moves and save the value of timer */
 function clickedCard(id){
     let card = document.getElementById(id);
     //quando clicchi una card si flippa
     card.style.backgroundColor = "red";
     //idea : potrei gestire lo stato (flipped !flipped) delle card con il localStorage ( consulta erika e raffa )
     //potrei salvare l id della card che ho cliccato in localStorage e poi per cambiarne lo stile prendo le info sul div dal localStorage
+
     console.log(match.length);
     if(match.length == 2){
         let card = document.getElementById(id);
+        //flippa la card
         card.style.backgroundColor = "red";
         match = [];
         let clicked1 = document.getElementById(id);
@@ -226,6 +228,7 @@ function clickedCard(id){
         console.log(clicked1);
     }else{
         let card = document.getElementById(id);
+        //flippa la card
         card.style.backgroundColor = "red";
         let clicked1 = document.getElementById(id);
         match.push(clicked1.innerHTML);
@@ -236,11 +239,50 @@ function clickedCard(id){
             console.log("coppia trovata");
             //card.style.visibility ="hidden";
             //fai in modo che le carte non siano più cliccabili -> visibility:hidden
-        }else if(match.length ==1){
-            //gira indietro le carte 
-        }else{
-            setTimeout(function(){ alert("flippo le card"); }, 3000);
 
+        }else if(match.length == 1){
+            //flippa le card le carte
+        }else{
+            setTimeout(function(){
+                 alert("flippo le card");
+                 if(match.length == 2 && match[0] != match[1]){
+                    console.log(strgCards[1]);
+                    strgCards[1].map(s=>{
+                        let x = document.getElementById(s);
+                        x.classList.add("primary");
+                    })
+                }
+            }, 3000);
         }
     }
+    if(ids.length == 2 ){
+        ids = [];
+    }
+    ids.push(id);
+    setLocalStorage("matchingCards",[match,ids]);
+    //dopo aver settato nel local storage il riferimento all elemento tramite id possiamo prendere tutti gli elementi con quell id e aggiungere classi in modo dinamico
+    let strgCards = getLocalStorage("matchingCards");
+    setTimeout(function(){
+        if(match[0] === match[1] && ids[0] !== ids[1]){
+            //prendiamo gli elementi che hanno id = id salvati in ids(localstorage)
+            console.log(strgCards[1]);
+            //in strgCards[1] stanno gli indici delle carte che ho matchato
+            strgCards[1].map(s=>{
+                let x = document.getElementById(s);
+                x.classList.add("yellow");
+            })
+        }
+    }, 1000);
+}
+
+/* funzione che facilita la scrittura in localStorage => name e value devono essere stringhe */
+function setLocalStorage(name, value){
+    let stringifiedValue = JSON.stringify(value);
+    window.localStorage.setItem(name, stringifiedValue);
+}
+
+function getLocalStorage(name){
+    let strg = window.localStorage.getItem(name);
+    let parsedStrg = JSON.parse(strg);
+    return parsedStrg;
 }
