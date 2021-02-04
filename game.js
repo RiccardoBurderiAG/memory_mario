@@ -119,9 +119,6 @@ window.onload = function(){
     let lclStrg = window.localStorage.getItem("levelCards");
     let levelCard = JSON.parse(lclStrg);
     /* mettiamo il valore di levelCard vicino al titolo Livello */
-
-    console.log(levelCard);
-    /* in questa funzione facciamo in modo che venga preso solo una porzione di cards e lo mescoliamo e poi creiamo i div */
     let slicedCards = cards.slice(0,levelCard);
     shuffleCards(slicedCards);
     //per ogni card dentro lo slicedCards (mazzo già mescolato) creiamo l elemento e mettiamolo nella grid => <div class="card">ciao</div>
@@ -139,44 +136,35 @@ window.onload = function(){
     });
 
     let cardElements = document.querySelectorAll(".cardGame");
-    console.log(cardElements[0].children);
 
     setTimeout(() => {
         Array.from(cardElements[0].children).forEach(function (element) {
             element.classList.add("card-flipped");
           });
         }, 5000);
-/*         myTimer(); */
-
 
     let title = document.querySelector(".header h1");
     switch (levelCard) {
         case 12:
             title.innerHTML += " 1" + ` (`+levelCard+`)`;
-            console.log("Livello 1")
             break;
         case 16:
             title.innerHTML += " 2" +` (`+levelCard+`)`;
-            console.log("Livello2");
             break;
         case 20:
             title.innerHTML += " 3" +` (`+levelCard+`)`;
-            console.log("Livello3");
             gridCards.style.gridTemplateColumns = "auto auto auto auto auto"
             break;
         case 24:
             title.innerHTML += " 4" +` (`+levelCard+`)`;
-            console.log("Livello4");
             gridCards.style.gridTemplateColumns ="auto auto auto auto auto auto"
             break;
         case 30:
             title.innerHTML += " 5" +` (`+levelCard+`)`;
-            console.log("Livello5");
             gridCards.style.gridTemplateColumns ="auto auto auto auto auto auto"
             break;
         case 36:
             title.innerHTML += " 6" +` (`+levelCard+`)`;
-            console.log("Livello6");
             gridCards.style.gridTemplateColumns ="auto auto auto auto auto auto"
             break;
         default:
@@ -184,9 +172,6 @@ window.onload = function(){
     }
 }
 
-function Start(){
-    Timer();
-}
 
 function shuffleCards(array){
     console.log("sto mescolando il mazzo", array);
@@ -203,9 +188,7 @@ function shuffleCards(array){
 }
 
 
-setTimeout(()=>{
-    var timer = setInterval(myTimer, 1000);
-},5000);
+var timer = setInterval(myTimer, 1000);
 
 function myTimer(){
     let timerValue = document.querySelector("table tbody tr td:nth-child(3)");
@@ -228,14 +211,13 @@ let i = 0;
 /* TODO aggiungi gestione div "done" che rappresenta lo stato di superamento di un livello ( salviamo queste info nel localStorage ) */
 
 function clickedCard(id){
-    console.log(i); // counter of moves made
+    console.log(i+1); // counter of moves made
     let card = document.getElementById(id);
     //quando clicchi una card si flippa
 
     //idea : potrei gestire lo stato (flipped !flipped) delle card con il localStorage ( consulta erika e raffa )
     //potrei salvare l id della card che ho cliccato in localStorage e poi per cambiarne lo stile prendo le info sul div dal localStorage
 
-    console.log(match.length);
     if(match.length == 2){
         let card = document.getElementById(id);
         //flippa la card
@@ -244,7 +226,6 @@ function clickedCard(id){
         let clicked1 = document.getElementById(id);
         match.push(clicked1.innerHTML);
         i++;
-        console.log(clicked1);
     }else{
         let card = document.getElementById(id);
         //flippa la card
@@ -252,9 +233,7 @@ function clickedCard(id){
         card.classList.remove("card-flipped");
         let clicked1 = document.getElementById(id);
         match.push(clicked1.innerHTML);
-        console.log(match);
         i++;
-        console.log(clicked1.innerHTML);
 
 
 
@@ -266,7 +245,6 @@ function clickedCard(id){
             setTimeout(function(){
                  alert("flippo le card");
                  if(match.length == 2 && match[0] != match[1]){
-                    console.log(strgCards[1]);
                     strgCards[1].map(s=>{
                         let x = document.getElementById(s);
                         x.classList.add("card-flipped");
@@ -285,7 +263,6 @@ function clickedCard(id){
     setTimeout(function(){
         if(match[0] === match[1] && ids[0] !== ids[1]){
             //prendiamo gli elementi che hanno id = id salvati in ids(localstorage)
-            console.log(strgCards[1]);
             //in strgCards[1] stanno gli indici delle carte che ho matchato
             strgCards[1].map(s=>{
                 let x = document.getElementById(s);
@@ -295,17 +272,15 @@ function clickedCard(id){
     }, 1000);
 
     if(match.length == 2){
-        checkStatusGame();
+        checkStatusGame(i);
     }
 }
 
 //funzione che gestisce la fine del gioco
-function checkStatusGame(){
+function checkStatusGame(index){
     let lvl = getLocalStorage("levelCards");
     let cards = document.querySelectorAll(".cardGame .yellow");
-    console.log(cards);
     if(cards.length == lvl -2){
-        console.log("Congratulations");
         let cardGame = document.getElementsByClassName("cardGame");
         let congrat = document.createElement("div");
         let congratText = document.createTextNode("Congratulazioni");
@@ -320,6 +295,9 @@ function checkStatusGame(){
         setTimeout(function(){
             cardGame[0].append(congrat);
         },1500);
+
+        let numMoves = document.querySelector("table tbody tr td:nth-child(2)");
+        numMoves.innerHTML = index+1;
     }
     //complimenti hai finito il gioco
 }

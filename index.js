@@ -60,6 +60,7 @@ window.onload = function(){
 
     //console.log(getLocalStorage("playerName")[0]);
     /* creaimo le card che rimandano ai livelli */
+    window.localStorage.removeItem("matchingCards");
     levels.map(l=>{
         console.log(l);
         let table = document.querySelector(".levels");
