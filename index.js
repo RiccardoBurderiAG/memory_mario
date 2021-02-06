@@ -44,6 +44,17 @@ function savePlayer(){
     console.log(typeof name);
     indexPlayers++;
     setLocalStorage("playerName",name);
+    //nascondiamo il form di inserimento del nome e sostituiamolo con il nome inserito
+    let formPlayer = document.querySelector("form");
+    formPlayer.style.display = "none";
+}
+
+function startNewGame(){
+    //rimette il form per l inserimento del nome e modifica il nome del giocatore nel localStorage
+    let formPlayer = document.querySelector("form");
+    formPlayer.style.display = "flex";
+    document.getElementById("nome").value = "";
+    window.localStorage.removeItem("playerName");
 }
 
 function goToRanks(lvl){
