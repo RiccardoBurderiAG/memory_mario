@@ -46,6 +46,12 @@ function savePlayer(){
     setLocalStorage("playerName",name);
     //nascondiamo il form di inserimento del nome e sostituiamolo con il nome inserito
     let formPlayer = document.querySelector("form");
+    let center = document.getElementsByClassName("center");
+    let playerName = document.createElement("h1");
+    playerName.setAttribute("NomeGiocatore", name);
+    playerName.innerHTML = name;
+    console.log(typeof playerName);
+    center[0].appendChild(playerName);
     formPlayer.style.display = "none";
 }
 
@@ -54,6 +60,8 @@ function startNewGame(){
     let formPlayer = document.querySelector("form");
     formPlayer.style.display = "flex";
     document.getElementById("nome").value = "";
+    let playerName = document.querySelector("[NomeGiocatore]");
+    playerName.remove();
     window.localStorage.removeItem("playerName");
 }
 
