@@ -210,7 +210,6 @@ var ids = [];
 let i = 0;
 
 /* TODO aggiungi gestione click, si possono cliccare solo 2 card alla volta */
-/* TODO aggiungi link al prossimo livello (modifica il valore di levelCards in base al livello in cui sei così con il link viene impostato anche il numero di card) */
 /* TODO aggiungi gestione div "done" che rappresenta lo stato di superamento di un livello ( salviamo queste info nel localStorage ) */
 /* TODO stop timer when game is over */
 /* TODO calculate best score for player */
@@ -300,6 +299,7 @@ function checkStatusGame(index){
 
         //qui salviamo queste info nel localStorage come score del giocatore
         saveGame();
+        checkBestScore();
     }
     //complimenti hai finito la partita
 }
@@ -334,6 +334,10 @@ function saveGame(){
     clearInterval(myTimer);
 }
 
+function checkBestScore(){
+    //per ogni elemento nel localStorage con chiave
+    let games = getLocalStorage("savedGames");
+}
 // funzione che facilita la scrittura in localStorage => name e value devono essere stringhe
 function setLocalStorage(name, value){
     let stringifiedValue = JSON.stringify(value);

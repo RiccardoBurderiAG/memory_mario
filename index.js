@@ -78,6 +78,18 @@ function useSubSetCards(val){
 
 window.onload = function(){
     // all inizio creiamo la lista dei livelli (presi dal localstorage) che si possono fare e poi attacchiamo a tutti le icone fas fa-award il got to ranklist
+    let player = getLocalStorage("playerName");
+    if(player && player != "-"){
+        let formPlayer = document.querySelector("form");
+        let center = document.getElementsByClassName("center");
+        let playerName = document.createElement("h1");
+        let player = getLocalStorage("playerName");
+        playerName.setAttribute("NomeGiocatore", player);
+        playerName.innerHTML = player;
+        console.log(typeof playerName);
+        center[0].appendChild(playerName);
+        formPlayer.style.display = "none";
+    }
 
     // creaimo le card che rimandano ai livelli
     window.localStorage.removeItem("matchingCards");
