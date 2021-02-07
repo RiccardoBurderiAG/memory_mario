@@ -76,6 +76,14 @@ function useSubSetCards(val){
     window.localStorage.setItem("levelCards", val); //in questo caso magari voglio proprio il numero come valore
 }
 
+/* TODO aggiungi gestione div "done" che rappresenta lo stato di superamento di un livello ( salviamo queste info nel localStorage ) => onload*/
+
+function checkDone(){
+    let playerName = getLocalStorage("playerName");
+    let savedGames = getLocalStorage("savedGames");
+    //per ogni elemeto di savedGames con name=playerName vediamo se ci sono elementi con level = ognuno dei livelli possibili
+}
+
 window.onload = function(){
     // all inizio creiamo la lista dei livelli (presi dal localstorage) che si possono fare e poi attacchiamo a tutti le icone fas fa-award il got to ranklist
     let player = getLocalStorage("playerName");
@@ -113,7 +121,7 @@ window.onload = function(){
         let listEle3 = document.createElement("li");
 
         listEle1.innerHTML = `<i class="fas fa-award" onclick="goToRanks(`+ l.val +`)"></i>`;
-        listEle2.innerHTML = `<div class="completed"></div>`;
+        listEle2.innerHTML = `<div class="completed" id=`+ l.val +`></div>`;
         listEle3.innerHTML = `<i class="fas fa-chevron-right" onclick="goToLevel(` + l.val + `)"></i>`;
         actionList.appendChild(listEle1);
         actionList.appendChild(listEle2);
@@ -127,7 +135,9 @@ window.onload = function(){
     })
     iconAward = document.getElementsByClassName("fa-award");
     console.log(iconAward.length);
+    checkDone();
 }
+
 
 /* funzione che facilita la scrittura in localStorage => name e value devono essere stringhe */
 function setLocalStorage(name, value){

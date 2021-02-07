@@ -211,7 +211,6 @@ var ids = [];
 let i = 0;
 
 /* TODO aggiungi gestione click, si possono cliccare solo 2 card alla volta */
-/* TODO aggiungi gestione div "done" che rappresenta lo stato di superamento di un livello ( salviamo queste info nel localStorage ) */
 /* TODO stop timer when game is over */
 
 function clickedCard(id){
@@ -220,7 +219,6 @@ function clickedCard(id){
     //quando clicchi una card si flippa
 
     if(match.length == 2){
-        let card = document.getElementById(id);
         //flippa la card
         card.classList.remove("card-flipped");
 
@@ -240,14 +238,25 @@ function clickedCard(id){
         }else if(match.length == 1){
             //flippa le carte
         }else{
+            var body = document.getElementsByClassName("container");
+
+            for (i = 0; i < body.length; i++) {
+            body.item(i).style.pointerEvents = "none";
+            }
             setTimeout(function(){
                  if(match.length == 2 && match[0] != match[1]){
                     strgCards[1].map(s=>{
+                        document.getElementsByClassName("card-flipped").pointerEvent = "none";
+                        console.log(document.getElementsByClassName("card-flipped"));
                         let x = document.getElementById(s);
                         x.classList.add("card-flipped");
+                                   for (i = 0; i < body.length; i++) {
+                body.item(i).style.pointerEvents = "auto";
+            }
                     })
                 }
             }, 3000);
+
         }
     }
     if(ids.length == 2 ){
@@ -268,8 +277,9 @@ function clickedCard(id){
         }
     }, 1000);
 
+    console.log(document.getElementById("container"));
+    //document.getElementById("container")[0].children.style.pointerEvents = "none";
     if(match.length == 2){
-        document.getElementsByClassName(".card-flipped").pointerEvent = "none";
         checkStatusGame(i);
     }
 }
@@ -335,7 +345,6 @@ function saveGame(){
 
 }
 
-/* TODO calculate best score for player */
 
 function checkBestScore(){
     //per ogni elemento nel localStorage con chiave
@@ -359,6 +368,7 @@ function checkBestScore(){
     let tabEleScore = document.querySelector("table tbody tr td:first-child");
     tabEleScore.innerHTML = bestScore;
 }
+
 // funzione che facilita la scrittura in localStorage => name e value devono essere stringhe
 function setLocalStorage(name, value){
     let stringifiedValue = JSON.stringify(value);
