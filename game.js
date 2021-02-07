@@ -170,6 +170,7 @@ window.onload = function(){
         default:
             break;
     }
+    checkBestScore();
 }
 
 
@@ -212,7 +213,6 @@ let i = 0;
 /* TODO aggiungi gestione click, si possono cliccare solo 2 card alla volta */
 /* TODO aggiungi gestione div "done" che rappresenta lo stato di superamento di un livello ( salviamo queste info nel localStorage ) */
 /* TODO stop timer when game is over */
-/* TODO calculate best score for player */
 
 function clickedCard(id){
     console.log(i+1); // counter of moves made
@@ -332,11 +332,32 @@ function saveGame(){
     window.localStorage.removeItem("matchingCards");
     setLocalStorage("savedGames", gameStrg);
     clearInterval(myTimer);
+
 }
+
+/* TODO calculate best score for player */
 
 function checkBestScore(){
     //per ogni elemento nel localStorage con chiave
+    window.localStorage.removeItem("bestScore");
     let games = getLocalStorage("savedGames");
+    let playerName = getLocalStorage("playerName");
+    let level = getLocalStorage("levelCards");
+    let scores = [];
+    //preso il valore di playerName, per ogni elemento in savedGames con name = playerName calcoliamo il maxScore di quel giocatore
+    games.map(g =>{
+        console.log(g);
+        if(g.playerName == playerName && g.level == level){
+            scores.push(g.movesGame);
+            var min = Math.min( ...scores);
+            console.log(min);
+            setLocalStorage("bestScore", min);
+        }
+    })
+
+    let bestScore = getLocalStorage("bestScore");
+    let tabEleScore = document.querySelector("table tbody tr td:first-child");
+    tabEleScore.innerHTML = bestScore;
 }
 // funzione che facilita la scrittura in localStorage => name e value devono essere stringhe
 function setLocalStorage(name, value){
