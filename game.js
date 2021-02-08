@@ -191,16 +191,19 @@ function shuffleCards(array){
 }
 
 
-var timer = setTimeout(() => {
-    setInterval(myTimer, 1000);
-}, 5000);
-
+//il timer inizia quando la pagina carica => deve partire dopo 5s
+var mytimer = setInterval(myTimer, 1000);
 function myTimer(){
+    setTimeout(() => {
     let timerValue = document.querySelector("table tbody tr td:nth-child(3)");
     let tmp = JSON.parse(timerValue.innerHTML);
     tmp++;
     timerValue.innerHTML = JSON.stringify(tmp);
+}, 5000);
+
 }
+
+
 
 function goHomeUrDrunk(){
     window.location.href = "./index.html"
@@ -210,7 +213,6 @@ var match = [];
 var ids = [];
 let i = 0;
 
-/* TODO stop timer when game is over */
 
 function clickedCard(id){
     console.log(i+1); // counter of moves made
@@ -249,9 +251,9 @@ function clickedCard(id){
                         console.log(document.getElementsByClassName("card-flipped"));
                         let x = document.getElementById(s);
                         x.classList.add("card-flipped");
-                                   for (i = 0; i < body.length; i++) {
-                body.item(i).style.pointerEvents = "auto";
-            }
+                        for (i = 0; i < body.length; i++) {
+                            body.item(i).style.pointerEvents = "auto";
+                        }
                     })
                 }
             }, 3000);
@@ -279,21 +281,27 @@ function clickedCard(id){
     console.log(document.getElementById("container"));
     //document.getElementById("container")[0].children.style.pointerEvents = "none";
     if(match.length == 2){
-        checkStatusGame(i);
+        let lvl = getLocalStorage("levelCards");
+        let cards = document.querySelectorAll(".cardGame .flipped");
+        if(cards.length == lvl -2){
+            clearInterval(mytimer);
+            checkStatusGame(i);
+        }
     }
 }
+
 
 //funzione che gestisce la fine del gioco
 function checkStatusGame(index){
     let lvl = getLocalStorage("levelCards");
     let cards = document.querySelectorAll(".cardGame .flipped");
     if(cards.length == lvl -2){
+        clearInterval(mytimer);
         let cardGame = document.getElementsByClassName("cardGame");
         let congrat = document.createElement("div");
         let congratText = document.createTextNode("Congratulazioni");
-        //qui devo prendere tutte le info che mi servono per popolare la tabella punteggio
+
         //stop timer , set number of moves, best moves number (based on localStorage)
-        clearInterval(timer);
         congrat.appendChild(congratText);
         congrat.style.position = "absolute";
         congrat.style.top = "33%";
@@ -301,7 +309,7 @@ function checkStatusGame(index){
         congrat.style.fontSize = "40px";
         setTimeout(function(){
             cardGame[0].append(congrat);
-        },1500);
+        },2000);
 
         let numMoves = document.querySelector("table tbody tr td:nth-child(2)");
         numMoves.innerHTML = index+1;
@@ -340,8 +348,6 @@ function saveGame(){
     console.log(gameStrg);
     window.localStorage.removeItem("matchingCards");
     setLocalStorage("savedGames", gameStrg);
-    clearInterval(myTimer);
-
 }
 
 
