@@ -210,7 +210,6 @@ var match = [];
 var ids = [];
 let i = 0;
 
-/* TODO aggiungi gestione click, si possono cliccare solo 2 card alla volta */
 /* TODO stop timer when game is over */
 
 function clickedCard(id){

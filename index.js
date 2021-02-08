@@ -49,6 +49,7 @@ function savePlayer(){
     let center = document.getElementsByClassName("center");
     let playerName = document.createElement("h1");
     playerName.setAttribute("NomeGiocatore", name);
+    playerName.style.margin = "0px";
     playerName.innerHTML = name;
     console.log(typeof playerName);
     center[0].appendChild(playerName);
@@ -93,6 +94,7 @@ window.onload = function(){
         let playerName = document.createElement("h1");
         let player = getLocalStorage("playerName");
         playerName.setAttribute("NomeGiocatore", player);
+        playerName.style.margin = "0px";
         playerName.innerHTML = player;
         console.log(typeof playerName);
         center[0].appendChild(playerName);
