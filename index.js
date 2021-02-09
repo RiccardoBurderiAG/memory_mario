@@ -1,4 +1,3 @@
-
 var levels = [
     {
         id: 0,
@@ -25,61 +24,6 @@ var levels = [
         val: 36
     }
 ]
-
-function goToLevel(lvl){
-    //possiamo gestire la renderizzazione delle card in base al livello con uno switch case
-    useSubSetCards(lvl);
-    window.location.href = "./game.html";
-}
-
-let indexPlayers = 0;
-let x = [];
-
-if(!getLocalStorage("savedGames")){
-    let gameStrg = [];
-    setLocalStorage("savedGames", gameStrg);
-}
-function savePlayer(){
-    let name = document.playerName.nome.value;
-    console.log(typeof name);
-    indexPlayers++;
-    setLocalStorage("playerName",name);
-    //nascondiamo il form di inserimento del nome e sostituiamolo con il nome inserito
-    let formPlayer = document.querySelector("form");
-    let center = document.getElementsByClassName("center");
-    let playerName = document.createElement("h1");
-    playerName.setAttribute("NomeGiocatore", name);
-    playerName.style.margin = "0px";
-    playerName.innerHTML = name;
-    console.log(typeof playerName);
-    center[0].appendChild(playerName);
-    formPlayer.style.display = "none";
-}
-
-function startNewGame(){
-    //rimette il form per l inserimento del nome e modifica il nome del giocatore nel localStorage
-    let formPlayer = document.querySelector("form");
-    formPlayer.style.display = "flex";
-    document.getElementById("nome").value = "";
-    let playerName = document.querySelector("[NomeGiocatore]");
-    playerName.remove();
-    window.localStorage.removeItem("playerName");
-}
-
-function goToRanks(lvl){
-    window.localStorage.setItem("rankLevel", lvl);
-    window.location.href = "./ranklist.html"
-}
-/* function that sets the number of cards i want to show in the game page => in game.html it will render a number of "val" cards depending on localStorage */
-/* for example i can create the whole 36 cards item and then slice it depending on "val" */
-function useSubSetCards(val){
-    console.log("hai selezionato il livello con " + val + " carte");
-    window.localStorage.setItem("levelCards", val); //in questo caso magari voglio proprio il numero come valore
-}
-
-/* TODO aggiungi gestione div "done" che rappresenta lo stato di superamento di un livello ( salviamo queste info nel localStorage ) => onload*/
-
-
 
 window.onload = function(){
     // all inizio creiamo la lista dei livelli (presi dal localstorage) che si possono fare e poi attacchiamo a tutti le icone fas fa-award il got to ranklist
@@ -118,13 +62,21 @@ window.onload = function(){
         let listEle2 = document.createElement("li");
         let listEle3 = document.createElement("li");
 
-        listEle1.innerHTML = `<i class="fas fa-award" onclick="goToRanks(`+ l.val +`)"></i>`;
+        listEle1.innerHTML = `<i class="fas fa-award"></i>`;
         listEle2.innerHTML = `<div class="completed" id=`+ l.val +`></div>`;
-        listEle3.innerHTML = `<i class="fas fa-chevron-right" onclick="goToLevel(` + l.val + `)"></i>`;
+        listEle3.innerHTML = `<i class="fas fa-chevron-right"></i>`;
         actionList.appendChild(listEle1);
         actionList.appendChild(listEle2);
         actionList.appendChild(listEle3);
 
+        listEle1.onclick = function(){
+            window.localStorage.setItem("rankLevel", l.val);
+            window.location.href = "./ranklist.html"
+        }
+        listEle3.onclick = function(){
+            useSubSetCards(l.val);
+            window.location.href = "./game.html";
+        }
         myCardActions.classList.add("actions");
         myCardActions.appendChild(actionList);
         myCard.appendChild(myCardTitle);
@@ -132,15 +84,67 @@ window.onload = function(){
         table.appendChild(myCard);
         checkDone(l.val);
     })
-    iconAward = document.getElementsByClassName("fa-award");
-    console.log(iconAward.length);
 }
 
 
+let indexPlayers = 0;
+let x = [];
+
+if(!getLocalStorage("savedGames")){
+    let gameStrg = [];
+    setLocalStorage("savedGames", gameStrg);
+}
+
+
+//mettiamo export così quando webpack fa il bundle queste funzioni avranno uno scope molto elevato( livello window ) e potrenno essere chiamate in qualunque momento
+//questo succede solo per le funzioni che non vengono chiamate direttamente all interno del codice stesso (savePlayer e startNewGame sono due funzioni eseguite in seguito ad un evento click)
+function savePlayer(){
+    let name = document.playerName.nome.value;
+    console.log(typeof name);
+    indexPlayers++;
+    setLocalStorage("playerName",name);
+    //nascondiamo il form di inserimento del nome e sostituiamolo con il nome inserito
+    let formPlayer = document.querySelector("form");
+    let center = document.getElementsByClassName("center");
+    let playerName = document.createElement("h1");
+    playerName.setAttribute("NomeGiocatore", name);
+    playerName.style.margin = "8px";
+    playerName.innerHTML = name;
+    console.log(typeof playerName);
+    center[0].appendChild(playerName);
+    formPlayer.style.display = "none";
+}
+
+
+function startNewGame(){
+    //rimette il form per l inserimento del nome e modifica il nome del giocatore nel localStorage
+    let formPlayer = document.querySelector("form");
+    formPlayer.style.display = "flex";
+    document.getElementById("nome").value = "";
+    let playerName = document.querySelector("[NomeGiocatore]");
+    playerName.remove();
+    window.localStorage.removeItem("playerName");
+}
+
+/* function that sets the number of cards i want to show in the game page => in game.html it will render a number of "val" cards depending on localStorage */
+/* for example i can create the whole 36 cards item and then slice it depending on "val" */
+function useSubSetCards(val){
+    console.log("hai selezionato il livello con " + val + " carte");
+    window.localStorage.setItem("levelCards", val); //in questo caso magari voglio proprio il numero come valore
+}
+
 function checkDone(level){
-    let divDone = document.querySelector(`li[id='`+ level+`']`);
-/*     divDone.style.backgroundColor = "green";
- */}
+    //controlla se esiste almeno un elemento di savedGames con campo level = level
+    let player = getLocalStorage("playerName");
+    let lvl = getLocalStorage("savedGames");
+    lvl.map(l => {
+        if(l.level == level){
+            let divDone = document.querySelector(`.completed[id="`+ level + `"]`);
+            divDone.style.backgroundColor = "green";
+        }
+    })
+
+}
 
 /* funzione che facilita la scrittura in localStorage => name e value devono essere stringhe */
 function setLocalStorage(name, value){
