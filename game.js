@@ -213,6 +213,8 @@ var match = [];
 var ids = [];
 let i = 0;
 
+/* TODO imposta al momento giusto il clearInterval(timer) per il calcolo del tempo impiegato */
+/* TODO imposta il giusto momento in cui non si possono cliccare le carte (subito dopo aver cliccato due carte) */
 
 function clickedCard(id){
     console.log(i+1); // counter of moves made

@@ -79,11 +79,7 @@ function useSubSetCards(val){
 
 /* TODO aggiungi gestione div "done" che rappresenta lo stato di superamento di un livello ( salviamo queste info nel localStorage ) => onload*/
 
-function checkDone(){
-    let playerName = getLocalStorage("playerName");
-    let savedGames = getLocalStorage("savedGames");
-    //per ogni elemeto di savedGames con name=playerName vediamo se ci sono elementi con level = ognuno dei livelli possibili
-}
+
 
 window.onload = function(){
     // all inizio creiamo la lista dei livelli (presi dal localstorage) che si possono fare e poi attacchiamo a tutti le icone fas fa-award il got to ranklist
@@ -134,12 +130,17 @@ window.onload = function(){
         myCard.appendChild(myCardTitle);
         myCard.appendChild(myCardActions);
         table.appendChild(myCard);
+        checkDone(l.val);
     })
     iconAward = document.getElementsByClassName("fa-award");
     console.log(iconAward.length);
-    checkDone();
 }
 
+
+function checkDone(level){
+    let divDone = document.querySelector(`li[id='`+ level+`']`);
+/*     divDone.style.backgroundColor = "green";
+ */}
 
 /* funzione che facilita la scrittura in localStorage => name e value devono essere stringhe */
 function setLocalStorage(name, value){
