@@ -113,6 +113,7 @@ function savePlayer(){
     console.log(typeof playerName);
     center[0].appendChild(playerName);
     formPlayer.style.display = "none";
+    location.reload();
 }
 
 
@@ -124,6 +125,7 @@ function startNewGame(){
     let playerName = document.querySelector("[NomeGiocatore]");
     playerName.remove();
     window.localStorage.removeItem("playerName");
+    location.reload();
 }
 
 /* function that sets the number of cards i want to show in the game page => in game.html it will render a number of "val" cards depending on localStorage */
