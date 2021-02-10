@@ -5,16 +5,20 @@ import logo from './assets/logo.png';
 
 var cards = [
     {
-        cardId :0
+        cardId :0,
+        cardImage : logo
     },
     {
-        cardId :0
+        cardId :0,
+        cardImage : logo
     },
     {
-        cardId :1
+        cardId :1,
+        cardImage : end
     },
     {
-        cardId :1
+        cardId :1,
+        cardImage : end
     },
     {
         cardId :2
@@ -135,8 +139,12 @@ window.onload = function(){
         gridElement.className = "card";
         gridElement.addEventListener("click", function() {
             clickedCard(i);
-          });
+        });
+        gridElement.style.fontSize = "1px";
         gridElement.id = i;
+        gridElement.style.backgroundImage = `url(` + s.cardImage + `)`;
+        gridElement.style.backgroundSize = 'contain';
+        gridElement.style.backgroundRepeat = 'no-repeat';
         gridCards.appendChild(gridElement);
     });
 

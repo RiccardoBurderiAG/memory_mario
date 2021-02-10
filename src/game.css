@@ -30,7 +30,6 @@
     min-height: 150px;
     margin: 10px;
     padding: 50px;
-    font-size: 30px;
     border: 3px solid blue;
     transition: transform 0.6s;
     text-align: center;
@@ -38,6 +37,7 @@
 
 .card-flipped{
     background-color: yellow;
+    background-image: none!important;
     min-width: 150px;
     min-height: 150px;
     margin: 10px;
