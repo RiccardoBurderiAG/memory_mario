@@ -144,7 +144,9 @@ function checkDone(level){
     lvl.map(l => {
         if(l.level == level && player == l.playerName){
             let divDone = document.querySelector(`.completed[id="`+ level + `"]`);
-            divDone.style.backgroundColor = "green";
+            divDone.style.backgroundImage = "url('https://static4.depositphotos.com/1011028/340/v/600/depositphotos_3406557-stock-illustration-thumb-up-gesture.jpg')";
+            divDone.style.backgroundSize = "contain";
+            divDone.style.backgroundRepeat = "no-repeat";
         }
     })
 
