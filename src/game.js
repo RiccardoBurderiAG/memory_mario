@@ -271,17 +271,14 @@ var ids = [];
 let i = 0;
 
 /* TODO imposta al momento giusto il clearInterval(timer) per il calcolo del tempo impiegato */
-/* TODO imposta il giusto momento in cui non si possono cliccare le carte (subito dopo aver cliccato due carte) */
+/* TODO animazione del flip mostra prima la carta "non flippata" e poi la flippa  */
 
 function clickedCard(id){
-    console.log(i+1); // counter of moves made
     let card = document.getElementById(id);
-    //quando clicchi una card si flippa
 
     if(match.length == 2){
         //flippa la card
         card.classList.remove("card-flipped");
-
         match = [];
         let clicked1 = document.getElementById(id);
         match.push(clicked1.innerHTML);
@@ -296,7 +293,7 @@ function clickedCard(id){
         if(!isNaN(match[1]) && match[0] === match[1]){
             console.log("coppia trovata");
         }else if(match.length == 1){
-            //flippa le carte
+            //se tolgo questo if il gioco si blocca perchè esegue riga 302
         }else{
             var body = document.getElementsByClassName("container");
 
