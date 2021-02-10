@@ -365,9 +365,7 @@ function checkStatusGame(index){
         congratImage.classList.add("imageEnd");
         //stop timer , set number of moves, best moves number (based on localStorage)
         congrat.appendChild(congratImage);
-        congrat.style.position = "absolute";
-        congrat.style.top = "0";
-        congrat.style.left = "0";
+        congrat.classList.add("end");
         setTimeout(function(){
             cardGame[0].append(congrat);
         },2000);

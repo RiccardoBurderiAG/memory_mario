@@ -53,7 +53,7 @@
     text-align: center;
 }
 .title table td{
-    min-width: 75px;
+    min-width: 140px;
     margin: 5px 20px
 }
 
@@ -69,6 +69,14 @@
     pointer-events: none;
 }
 
+.end{
+    position: absolute;
+    top: 0%;
+    left: 25%;
+    width: 50%;
+}
+
 .imageEnd{
     width: 100%;
 }
+
