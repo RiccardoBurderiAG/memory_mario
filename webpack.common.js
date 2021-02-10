@@ -19,7 +19,6 @@ module.exports = {
             test: /\.css$/i,
             use: [MiniCssExtractPlugin.loader, "css-loader"],
         },
-        //TODO add rule for png|jpg|fonts|..
         {
             test: /\.m?js$/,
             exclude: /(node_modules)/,
