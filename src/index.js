@@ -86,6 +86,12 @@ window.onload = function(){
         table.appendChild(myCard);
         checkDone(l.val);
     })
+
+    let playerName = document.querySelector("[NomeGiocatore]");
+    playerName.style.margin = "auto";
+    playerName.style.order = "1";
+    let restartButton = document.querySelector("#restart");
+    restartButton.style.order = "2";
 }
 
 
@@ -110,12 +116,15 @@ window.savePlayer = function(){
     let center = document.getElementsByClassName("center");
     let playerName = document.createElement("h1");
     playerName.setAttribute("NomeGiocatore", name);
-    playerName.style.margin = "8px";
+    playerName.style.margin = "auto";
+    playerName.style.order = "1";
+    let restartButton = document.querySelector("#restart");
+    restartButton.style.order = "2";
     playerName.innerHTML = name;
     console.log(typeof playerName);
     center[0].appendChild(playerName);
     formPlayer.style.display = "none";
-    location.reload();
+    location.reload();  // ne abbiamo bisogno perchè altrimenti non carica i divDone relativi al giocatore => con react farei un refresh del componente
 }
 
 
@@ -147,6 +156,7 @@ function checkDone(level){
             divDone.style.backgroundImage = "url('https://static4.depositphotos.com/1011028/340/v/600/depositphotos_3406557-stock-illustration-thumb-up-gesture.jpg')";
             divDone.style.backgroundSize = "contain";
             divDone.style.backgroundRepeat = "no-repeat";
+            divDone.style.backgroundColor = "rgba(51,51,51, 0.1)"
         }
     })
 
