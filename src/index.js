@@ -159,7 +159,6 @@ function checkDone(level){
             divDone.style.backgroundColor = "rgba(51,51,51, 0.1)"
         }
     })
-
 }
 
 /* funzione che facilita la scrittura in localStorage => name e value devono essere stringhe */

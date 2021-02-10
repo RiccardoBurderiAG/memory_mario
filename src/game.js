@@ -1,5 +1,7 @@
 import './game.css';
 import './index.css';
+import end from './assets/end.jpg';
+
 var cards = [
     {
         cardId :0
@@ -303,14 +305,16 @@ function checkStatusGame(index){
         clearInterval(mytimer);
         let cardGame = document.getElementsByClassName("cardGame");
         let congrat = document.createElement("div");
-        let congratText = document.createTextNode("Congratulazioni");
-
+        //trasformiamo congratText in un immagine
+        //let congratText = document.createTextNode("Congratulazioni");
+        let congratImage = document.createElement("img");
+        congratImage.src = "./assets/end.jpg";
+        congratImage.classList.add("imageEnd");
         //stop timer , set number of moves, best moves number (based on localStorage)
-        congrat.appendChild(congratText);
+        congrat.appendChild(congratImage);
         congrat.style.position = "absolute";
-        congrat.style.top = "33%";
-        congrat.style.left = "33%";
-        congrat.style.fontSize = "40px";
+        congrat.style.top = "0";
+        congrat.style.left = "0";
         setTimeout(function(){
             cardGame[0].append(congrat);
         },2000);

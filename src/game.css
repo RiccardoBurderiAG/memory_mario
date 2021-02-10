@@ -68,3 +68,7 @@
 .unclickable{
     pointer-events: none;
 }
+
+.imageEnd{
+    width: 100%;
+}
