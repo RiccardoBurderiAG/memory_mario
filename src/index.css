@@ -104,6 +104,14 @@ button{
     height: 99%;
 }
 
+a{
+    cursor: pointer;
+    text-decoration: none;
+    color: black;
+    font-weight: 400;
+    font-size: 30px;
+    margin:auto;
+}
 @media screen and (max-width: 1024px){
     .container{
         margin-right:150px;
