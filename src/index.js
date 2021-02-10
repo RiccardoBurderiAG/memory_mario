@@ -1,4 +1,6 @@
 import './index.css';
+import logo from './assets/logo.png';
+
 var levels = [
     {
         id: 0,

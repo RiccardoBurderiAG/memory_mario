@@ -1,6 +1,7 @@
 import './game.css';
 import './index.css';
 import end from './assets/end.jpg';
+import logo from './assets/logo.png';
 
 var cards = [
     {

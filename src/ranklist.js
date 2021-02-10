@@ -1,4 +1,5 @@
 import './ranklist.css';
+import logo from './assets/logo.png';
 
 let lvl = getLocalStorage("rankLevel");
 let playersScore = getLocalStorage("savedGames");
