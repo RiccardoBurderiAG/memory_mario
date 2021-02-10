@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="game.css">
+    <link rel="stylesheet" href="index.css">
+    <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css" integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p" crossorigin="anonymous"/>
+    <title>Game Page</title>
+</head>
+<body>
+    <div class="navbar">
+        <img id="logo" src="https://upload.wikimedia.org/wikipedia/commons/7/70/Gulf_logo.png" alt="">
+    </div>
+    <div class="container">
+        <div class="title">
+            <div class="header">
+                <i class="fas fa-chevron-left" onclick="goHomeUrDrunk()"></i>
+                <h1>Level</h1>
+            </div>
+            <div>
+                <table>
+                    <thead>
+                        <tr>
+                            <td>Miglior n mosse</td>
+                            <td>Numero mosse</td>
+                            <td>Timer</td>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>-</td>
+                            <td>-</td>
+                            <td>0</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <!-- Game Section -->
+        <!-- the number of card depends on localStorage [value of "levelCards" element]-->
+        <div class="cardGame">
+        </div>
+    </div>
+</body>
+</html>

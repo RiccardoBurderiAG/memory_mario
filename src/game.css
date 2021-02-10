@@ -1,0 +1,70 @@
+/* Title Section */
+.header{
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+}
+
+.header i{
+    font-size: 40px;
+}
+.header h1{
+    display: inline;
+    margin-right: 30%;
+}
+/* Game Section */
+.cardGame{
+    position: relative;
+    display: grid;
+    grid-template-columns: auto auto auto auto;
+    justify-content: space-around;
+    margin-top: 18px;
+}
+
+.container{
+    margin-top: 0px;
+}
+.card{
+    background-color: seagreen;
+    min-width: 150px;
+    min-height: 150px;
+    margin: 10px;
+    padding: 50px;
+    font-size: 30px;
+    border: 3px solid blue;
+    transition: transform 0.6s;
+    text-align: center;
+}
+
+.card-flipped{
+    background-color: yellow;
+    min-width: 150px;
+    min-height: 150px;
+    margin: 10px;
+    padding: 50px;
+    font-size: 0px;
+    border: 3px solid green;
+    transform:rotateY(180deg);
+    transition: transform 0.6s;
+}
+
+.title table{
+    width: 100%;
+    text-align: center;
+}
+.title table td{
+    min-width: 75px;
+    margin: 5px 20px
+}
+
+.flipped{
+    visibility: hidden!important;
+}
+
+.primary{
+    background-color: seagreen!important;
+}
+
+.unclickable{
+    pointer-events: none;
+}
