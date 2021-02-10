@@ -11,6 +11,8 @@
 .header h1{
     display: inline;
     margin-right: 30%;
+    font-size: 50px;
+
 }
 /* Game Section */
 .cardGame{
@@ -23,6 +25,7 @@
 
 .container{
     margin-top: 0px;
+    color: white;
 }
 .card{
     background-color: seagreen;
@@ -49,6 +52,7 @@
 }
 
 .title table{
+    font-size: 20px;
     width: 100%;
     text-align: center;
 }

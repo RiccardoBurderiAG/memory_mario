@@ -1,5 +1,6 @@
 import './index.css';
 import logo from './assets/logo.png';
+import bg from './assets/bg.jpg';
 
 var levels = [
     {
@@ -39,6 +40,7 @@ window.onload = function(){
         let player = getLocalStorage("playerName");
         playerName.setAttribute("NomeGiocatore", player);
         playerName.style.margin = "0px";
+        playerName.style.color = "white";
         playerName.innerHTML = player;
         console.log(typeof playerName);
         center[0].appendChild(playerName);
