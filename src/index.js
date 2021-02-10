@@ -88,8 +88,10 @@ window.onload = function(){
     })
 
     let playerName = document.querySelector("[NomeGiocatore]");
-    playerName.style.margin = "auto";
-    playerName.style.order = "1";
+    if(playerName != null){
+        playerName.style.margin = "auto";
+        playerName.style.order = "1";
+    }
     let restartButton = document.querySelector("#restart");
     restartButton.style.order = "2";
 }
