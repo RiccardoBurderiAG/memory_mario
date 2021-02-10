@@ -1,5 +1,6 @@
 *{
     box-sizing: border-box;
+    font-family: sans-serif;
 }
 
 body{
@@ -9,8 +10,15 @@ body{
 .navbar{
     display: flex;
     align-items: flex-start;
+    justify-content: space-between;
     min-height: 60px;
     background-color: rgba(51,51,51,0.4);
+}
+
+#titleApp{
+    font-weight: 400;
+    font-size: 30px;
+    margin:auto;
 }
 .container{
     margin-right:350px;
@@ -71,6 +79,10 @@ button{
     display: flex;
     align-items: center;
     justify-content: space-between;
+}
+
+.levelCard{
+    cursor: pointer;
 }
 
 
