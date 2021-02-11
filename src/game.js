@@ -210,11 +210,11 @@ function setLevelTitle(lvlCard, gridCards){
     }
 }
 
-//funzione che gestisce la fine del gioco
+//funzione che gestisce la fine del gioco chiamata dentro clickedCards
 function checkStatusGame(index){
     let lvl = getLocalStorage("levelCards");
     let cards = document.querySelectorAll(".cardGame .flipped");
-    if(cards.length == lvl -2){
+    if(cards.length == lvl -2){     //l operazione di sottrazione potrebbe essere dovuta al fatto che ignora le ultime due carte cliccate
         clearInterval(mytimer);
         let cardGame = document.getElementsByClassName("cardGame");
         let congrat = document.createElement("div");
