@@ -33,6 +33,60 @@ var levels = [
 
 window.onload = function(){
     // all inizio creiamo la lista dei livelli (presi dal localstorage) che si possono fare e poi attacchiamo a tutti le icone fas fa-award il got to ranklist
+    checkPlayer();
+
+    // creaimo le card che rimandano ai livelli
+    window.localStorage.removeItem("matchingCards");
+
+    createLevelsList();
+
+    setPlayerNameStyle();
+
+}
+
+
+
+if(!getLocalStorage("savedGames")){
+    let gameStrg = [];
+    setLocalStorage("savedGames", gameStrg);
+}
+
+
+//mettiamo export così quando webpack fa il bundle queste funzioni avranno uno scope molto elevato( livello window ) e potrenno essere chiamate in qualunque momento
+//questo succede solo per le funzioni che non vengono chiamate direttamente all interno del codice stesso (savePlayer e startNewGame sono due funzioni eseguite in seguito ad un evento click)
+window.savePlayer = function(){
+    let name = document.playerName.nome.value;
+    console.log(typeof name);
+    setLocalStorage("playerName",name);
+    //nascondiamo il form di inserimento del nome e sostituiamolo con il nome inserito
+    let formPlayer = document.querySelector("form");
+    let center = document.getElementsByClassName("center");
+    let playerName = document.createElement("h1");
+    playerName.setAttribute("NomeGiocatore", name);
+    playerName.style.margin = "auto";
+    playerName.style.order = "1";
+    let restartButton = document.querySelector("#restart");
+    restartButton.style.order = "2";
+    playerName.innerHTML = name;
+    console.log(typeof playerName);
+    center[0].appendChild(playerName);
+    formPlayer.style.display = "none";
+    location.reload();  // ne abbiamo bisogno perchè altrimenti non carica i divDone relativi al giocatore => con react farei un refresh del componente
+}
+
+
+window.startNewGame = function(){
+    //rimette il form per l inserimento del nome e modifica il nome del giocatore nel localStorage
+    let formPlayer = document.querySelector("form");
+    formPlayer.style.display = "flex";
+    document.getElementById("nome").value = "";
+    let playerName = document.querySelector("[NomeGiocatore]");
+    playerName.remove();
+    window.localStorage.removeItem("playerName");
+    //location.reload();
+}
+
+function checkPlayer(){
     let player = getLocalStorage("playerName");
     if(player && player != "-"){
         let formPlayer = document.querySelector("form");
@@ -47,9 +101,9 @@ window.onload = function(){
         center[0].appendChild(playerName);
         formPlayer.style.display = "none";
     }
+}
 
-    // creaimo le card che rimandano ai livelli
-    window.localStorage.removeItem("matchingCards");
+function createLevelsList(){
     levels.forEach(l=>{
         console.log(l);
         let table = document.querySelector(".levels");
@@ -92,6 +146,9 @@ window.onload = function(){
         checkDone(l.val);
     })
 
+}
+
+function setPlayerNameStyle(){
     let playerName = document.querySelector("[NomeGiocatore]");
     if(playerName != null){
         playerName.style.margin = "auto";
@@ -99,53 +156,7 @@ window.onload = function(){
     }
     let restartButton = document.querySelector("#restart");
     restartButton.style.order = "2";
-}
-
-
-let indexPlayers = 0;
-let x = [];
-
-if(!getLocalStorage("savedGames")){
-    let gameStrg = [];
-    setLocalStorage("savedGames", gameStrg);
-}
-
-
-//mettiamo export così quando webpack fa il bundle queste funzioni avranno uno scope molto elevato( livello window ) e potrenno essere chiamate in qualunque momento
-//questo succede solo per le funzioni che non vengono chiamate direttamente all interno del codice stesso (savePlayer e startNewGame sono due funzioni eseguite in seguito ad un evento click)
-window.savePlayer = function(){
-    let name = document.playerName.nome.value;
-    console.log(typeof name);
-    indexPlayers++;
-    setLocalStorage("playerName",name);
-    //nascondiamo il form di inserimento del nome e sostituiamolo con il nome inserito
-    let formPlayer = document.querySelector("form");
-    let center = document.getElementsByClassName("center");
-    let playerName = document.createElement("h1");
-    playerName.setAttribute("NomeGiocatore", name);
-    playerName.style.margin = "auto";
-    playerName.style.order = "1";
-    let restartButton = document.querySelector("#restart");
-    restartButton.style.order = "2";
-    playerName.innerHTML = name;
-    console.log(typeof playerName);
-    center[0].appendChild(playerName);
-    formPlayer.style.display = "none";
-    location.reload();  // ne abbiamo bisogno perchè altrimenti non carica i divDone relativi al giocatore => con react farei un refresh del componente
-}
-
-
-window.startNewGame = function(){
-    //rimette il form per l inserimento del nome e modifica il nome del giocatore nel localStorage
-    let formPlayer = document.querySelector("form");
-    formPlayer.style.display = "flex";
-    document.getElementById("nome").value = "";
-    let playerName = document.querySelector("[NomeGiocatore]");
-    playerName.remove();
-    window.localStorage.removeItem("playerName");
-    //location.reload();
-}
-
+};
 /* function that sets the number of cards i want to show in the game page => in game.html it will render a number of "val" cards depending on localStorage */
 /* for example i can create the whole 36 cards item and then slice it depending on "val" */
 function useSubSetCards(val){
