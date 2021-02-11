@@ -2,181 +2,19 @@ import './game.css';
 import './index.css';
 import end from './assets/end.jpg';
 import logo from './assets/logo.png';
-import card1 from './assets/1.png';
-import card2 from './assets/2.png';
-import card3 from './assets/3.png';
-import card4 from './assets/4.png';
-import card5 from './assets/5.png';
-import card6 from './assets/6.png';
-import card7 from './assets/7.png';
-import card8 from './assets/8.png';
-import card9 from './assets/9.png';
-import card10 from './assets/10.png';
-import card11 from './assets/11.png';
-import card12 from './assets/12.png';
-import card13 from './assets/13.png';
-import card14 from './assets/14.png';
-import card15 from './assets/15.png';
-import card16 from './assets/16.png';
-import card17 from './assets/17.png';
-import card18 from './assets/18.png';
-
-var cards = [
-    {
-        cardId :0,
-        cardImage : card1
-    },
-    {
-        cardId :0,
-        cardImage : card1
-    },
-    {
-        cardId :1,
-        cardImage : card2
-    },
-    {
-        cardId :1,
-        cardImage : card2
-    },
-    {
-        cardId :2,
-        cardImage : card3
-    },
-    {
-        cardId :2,
-        cardImage : card3
-    },
-    {
-        cardId :3,
-        cardImage : card4
-    },
-    {
-        cardId :3,
-        cardImage : card4
-    },
-    {
-        cardId :4,
-        cardImage : card5
-    },
-    {
-        cardId :4,
-        cardImage : card5
-    },
-    {
-        cardId :5,
-        cardImage : card6
-    },
-    {
-        cardId :5,
-        cardImage : card6
-    },
-    {
-        cardId :6,
-        cardImage : card7
-    },
-    {
-        cardId :6,
-        cardImage : card7
-    },
-    {
-        cardId :7,
-        cardImage : card8
-    },
-    {
-        cardId :7,
-        cardImage : card8
-    },
-    {
-        cardId :8,
-        cardImage : card9
-    },
-    {
-        cardId :8,
-        cardImage : card9
-    },
-    {
-        cardId :9,
-        cardImage : card10
-    },
-    {
-        cardId :9,
-        cardImage : card10
-    },
-    {
-        cardId :10,
-        cardImage : card11
-    },
-    {
-        cardId :10,
-        cardImage : card11
-    },
-    {
-        cardId :11,
-        cardImage : card12
-    },
-    {
-        cardId :11,
-        cardImage : card12
-    },
-    {
-        cardId :12,
-        cardImage : card13
-    },
-    {
-        cardId :12,
-        cardImage : card13
-    },
-    {
-        cardId :13,
-        cardImage : card14
-    },
-    {
-        cardId :13,
-        cardImage : card14
-    },
-    {
-        cardId :14,
-        cardImage : card15
-    },
-    {
-        cardId :14,
-        cardImage : card15
-    },
-    {
-        cardId :15,
-        cardImage : card16
-    },
-    {
-        cardId :15,
-        cardImage : card16
-    },
-    {
-        cardId :16,
-        cardImage : card17
-    },
-    {
-        cardId :16,
-        cardImage : card17
-    },
-    {
-        cardId :17,
-        cardImage : card18
-    },
-    {
-        cardId :17,
-        cardImage : card18
-    }
-]
+import cards from './utils';
+import { getLocalStorage, setLocalStorage } from './utils/localStorageMethods';
 
 window.onload = function(){
-    let lclStrg = window.localStorage.getItem("levelCards");
-    let levelCard = JSON.parse(lclStrg);
+    //let lclStrg = window.localStorage.getItem("levelCards");
+    //let levelCard = JSON.parse(lclStrg);
+    let lvlCard = getLocalStorage("levelCards");
     //mettiamo il valore di levelCard vicino al titolo Livello
-    let slicedCards = cards.slice(0,levelCard);
-    shuffleCards(slicedCards);
+    let slicedCards = cards.slice(0,lvlCard);
+    shuffleCards(slicedCards); //cosa ritorna questa funzione?
     //per ogni card dentro lo slicedCards (mazzo già mescolato) creiamo l elemento e mettiamolo nella grid => <div class="card">ciao</div>
     let gridCards = document.querySelector(".cardGame");
-    slicedCards.map((s,i)=>{
+    slicedCards.forEach((s,i)=>{
         let gridElement = document.createElement("div");
         let gridInner = document.createTextNode(s.cardId);
         gridElement.appendChild(gridInner);
@@ -186,42 +24,42 @@ window.onload = function(){
         });
         gridElement.style.fontSize = "1px";
         gridElement.id = i;
-        gridElement.style.backgroundImage = `url(` + s.cardImage + `)`;
+        gridElement.style.backgroundImage = `url( ${s.cardImage})`;
         gridElement.style.backgroundSize = 'contain';
         gridElement.style.backgroundRepeat = 'no-repeat';
         gridCards.appendChild(gridElement);
     });
 
     let cardElements = document.querySelectorAll(".cardGame");
-
+    console.log('cardElements', cardElements[0]);
     setTimeout(() => {
-        Array.from(cardElements[0].children).forEach(function (element) {
+        ([...cardElements[0].children]).forEach(function (element) {
             element.classList.add("card-flipped");
-          });
-        }, 5000);
+        });
+    }, 5000);
 
     let title = document.querySelector(".header h1");
-    switch (levelCard) {
+    switch (lvlCard) {
         case 12:
-            title.innerHTML += " 1" + ` (`+levelCard+`)`;
+            title.innerHTML += `1 (${lvlCard})`;
             break;
         case 16:
-            title.innerHTML += " 2" +` (`+levelCard+`)`;
+            title.innerHTML += `2 (${lvlCard})`;
             break;
         case 20:
-            title.innerHTML += " 3" +` (`+levelCard+`)`;
+            title.innerHTML += `3 (${lvlCard})`;
             gridCards.style.gridTemplateColumns = "auto auto auto auto auto"
             break;
         case 24:
-            title.innerHTML += " 4" +` (`+levelCard+`)`;
+            title.innerHTML += `4 (${lvlCard})`;
             gridCards.style.gridTemplateColumns ="auto auto auto auto auto auto"
             break;
         case 30:
-            title.innerHTML += " 5" +` (`+levelCard+`)`;
+            title.innerHTML += `5 (${lvlCard})`;
             gridCards.style.gridTemplateColumns ="auto auto auto auto auto auto"
             break;
         case 36:
-            title.innerHTML += " 6" +` (`+levelCard+`)`;
+            title.innerHTML += `6 (${lvlCard})`;
             gridCards.style.gridTemplateColumns ="auto auto auto auto auto auto"
             break;
         default:
@@ -302,7 +140,7 @@ function clickedCard(id){
             }
             setTimeout(function(){
                  if(match.length == 2 && match[0] != match[1]){
-                    strgCards[1].map(s=>{
+                    strgCards[1].forEach(s=>{
                         document.getElementsByClassName("card-flipped").pointerEvent = "none";
                         console.log(document.getElementsByClassName("card-flipped"));
                         let x = document.getElementById(s);
@@ -327,7 +165,7 @@ function clickedCard(id){
         if(match[0] === match[1] && ids[0] !== ids[1]){
             //prendiamo gli elementi che hanno id = id salvati in ids(localstorage)
             //in strgCards[1] stanno gli indici delle carte che ho matchato
-            strgCards[1].map(s=>{
+            strgCards[1].forEach(s=>{
                 let x = document.getElementById(s);
                 x.classList.add("flipped");
             })
@@ -337,11 +175,11 @@ function clickedCard(id){
     console.log(document.getElementById("container"));
     //document.getElementById("container")[0].children.style.pointerEvents = "none";
     if(match.length == 2){
+        checkStatusGame(i);
         let lvl = getLocalStorage("levelCards");
         let cards = document.querySelectorAll(".cardGame .flipped");
         if(cards.length == lvl -2){
             clearInterval(mytimer);
-            checkStatusGame(i);
         }
     }
 }
@@ -415,7 +253,7 @@ function checkBestScore(){
     let level = getLocalStorage("levelCards");
     let scores = [];
     //preso il valore di playerName, per ogni elemento in savedGames con name = playerName calcoliamo il maxScore di quel giocatore
-    games.map(g =>{
+    games.forEach(g =>{
         console.log(g);
         if(g.playerName == playerName && g.level == level){
             scores.push(g.movesGame);
@@ -428,17 +266,4 @@ function checkBestScore(){
     let bestScore = getLocalStorage("bestScore");
     let tabEleScore = document.querySelector("table tbody tr td:first-child");
     tabEleScore.innerHTML = bestScore;
-}
-
-// funzione che facilita la scrittura in localStorage => name e value devono essere stringhe
-function setLocalStorage(name, value){
-    let stringifiedValue = JSON.stringify(value);
-    window.localStorage.setItem(name, stringifiedValue);
-}
-
-function getLocalStorage(name){
-    let strg = window.localStorage.getItem(name);
-    let parsedStrg = JSON.parse(strg);
-    console.log(parsedStrg);
-    return parsedStrg;
 }

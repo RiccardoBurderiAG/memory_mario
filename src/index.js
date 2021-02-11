@@ -1,6 +1,7 @@
 import './index.css';
 import logo from './assets/logo.png';
 import bg from './assets/bg.jpg';
+import { getLocalStorage, setLocalStorage } from './utils/localStorageMethods';
 
 var levels = [
     {
@@ -49,16 +50,16 @@ window.onload = function(){
 
     // creaimo le card che rimandano ai livelli
     window.localStorage.removeItem("matchingCards");
-    levels.map(l=>{
+    levels.forEach(l=>{
         console.log(l);
         let table = document.querySelector(".levels");
         let myCard = document.createElement("div");
         let myCardTitle = document.createElement("div");
         let myCardActions = document.createElement("div");
 
-        myCard.classList.add(`myCard`+(l.id+1));
+        myCard.classList.add(`myCard${l.id+1}`);
         let title = document.createElement("h1");
-        title.innerHTML = `Livello ` + (l.id+1) + ` (` + l.val + `)`;
+        title.innerHTML = `Livello ${l.id+1} (${l.val})`;
         myCardTitle.appendChild(title);
 
         let actionList = document.createElement("ul");
@@ -68,9 +69,9 @@ window.onload = function(){
         let listEle2 = document.createElement("li");
         let listEle3 = document.createElement("li");
 
-        listEle1.innerHTML = `<i class="fas fa-award"></i>`;
-        listEle2.innerHTML = `<div class="completed" id=`+ l.val +`></div>`;
-        listEle3.innerHTML = `<i class="fas fa-chevron-right"></i>`;
+        listEle1.innerHTML = '<i class="fas fa-award"></i>';
+        listEle2.innerHTML = `<div class="completed" id= ${l.val}></div>`;
+        listEle3.innerHTML = '<i class="fas fa-chevron-right"></i>';
         actionList.appendChild(listEle1);
         actionList.appendChild(listEle2);
         actionList.appendChild(listEle3);
@@ -142,39 +143,27 @@ window.startNewGame = function(){
     let playerName = document.querySelector("[NomeGiocatore]");
     playerName.remove();
     window.localStorage.removeItem("playerName");
-    location.reload();
+    //location.reload();
 }
 
 /* function that sets the number of cards i want to show in the game page => in game.html it will render a number of "val" cards depending on localStorage */
 /* for example i can create the whole 36 cards item and then slice it depending on "val" */
 function useSubSetCards(val){
     console.log("hai selezionato il livello con " + val + " carte");
-    window.localStorage.setItem("levelCards", val); //in questo caso magari voglio proprio il numero come valore
+    setLocalStorage("levelCards", val); //in questo caso magari voglio proprio il numero come valore
 }
 
 function checkDone(level){
     //controlla se esiste almeno un elemento di savedGames con campo level = level
     let player = getLocalStorage("playerName");
     let lvl = getLocalStorage("savedGames");
-    lvl.map(l => {
+    lvl.forEach(l => {
         if(l.level == level && player == l.playerName){
-            let divDone = document.querySelector(`.completed[id="`+ level + `"]`);
+            let divDone = document.querySelector(`.completed[id="${level}"]`);
             divDone.style.backgroundImage = "url('https://static4.depositphotos.com/1011028/340/v/600/depositphotos_3406557-stock-illustration-thumb-up-gesture.jpg')";
             divDone.style.backgroundSize = "contain";
             divDone.style.backgroundRepeat = "no-repeat";
             divDone.style.backgroundColor = "rgba(51,51,51, 0.1)"
         }
     })
-}
-
-/* funzione che facilita la scrittura in localStorage => name e value devono essere stringhe */
-function setLocalStorage(name, value){
-    let stringifiedValue = JSON.stringify(value);
-    window.localStorage.setItem(name, stringifiedValue);
-}
-
-function getLocalStorage(name){
-    let strg = window.localStorage.getItem(name);
-    let parsedStrg = JSON.parse(strg);
-    return parsedStrg;
 }

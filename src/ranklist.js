@@ -1,5 +1,7 @@
 import './ranklist.css';
 import logo from './assets/logo.png';
+import { getLocalStorage, setLocalStorage } from './utils/localStorageMethods';
+
 
 let lvl = getLocalStorage("rankLevel");
 let playersScore = getLocalStorage("savedGames");
@@ -10,23 +12,23 @@ window.onload = function(){
     let title = document.createElement("h1");
     switch (lvl) {
         case 12:
-            title.innerHTML += " 1" + ` (`+lvl+`)`;
+            title.innerHTML += `1 ${lvl}`;
             break;
         case 16:
-            title.innerHTML += " 2" +` (`+lvl+`)`;
+            title.innerHTML += `2 ${lvl}`;
             break;
         case 20:
-            title.innerHTML += " 3" +` (`+lvl+`)`;
-             break;
+            title.innerHTML += `3 ${lvl}`;
+            break;
         case 24:
-            title.innerHTML += " 4" +` (`+lvl+`)`;
-             break;
+            title.innerHTML += `4 ${lvl}`;
+            break;
         case 30:
-            title.innerHTML += " 5" +` (`+lvl+`)`;
-             break;
+            title.innerHTML += `5 ${lvl}`;
+            break;
         case 36:
-            title.innerHTML += " 6" +` (`+lvl+`)`;
-             break;
+            title.innerHTML += `6 ${lvl}`;
+            break;
         default:
             break;
     }
@@ -48,17 +50,4 @@ window.onload = function(){
             tableBody[0].appendChild(newRow);
         }
     });
-}
-
-/* funzione che facilita la scrittura in localStorage => name e value devono essere stringhe */
-function setLocalStorage(name, value){
-    let stringifiedValue = JSON.stringify(value);
-    window.localStorage.setItem(name, stringifiedValue);
-}
-
-function getLocalStorage(name){
-    let strg = window.localStorage.getItem(name);
-    let parsedStrg = JSON.parse(strg);
-    console.log(parsedStrg);
-    return parsedStrg;
 }
