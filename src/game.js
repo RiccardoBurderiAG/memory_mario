@@ -4,83 +4,8 @@ import cards from './data';
 import { getLocalStorage, setLocalStorage } from './utils/localStorageMethods';
 
 window.onload = function(){
-    //let lclStrg = window.localStorage.getItem("levelCards");
-    //let levelCard = JSON.parse(lclStrg);
-    let lvlCard = getLocalStorage("levelCards");
-    //mettiamo il valore di levelCard vicino al titolo Livello
-    let slicedCards = cards.slice(0,lvlCard);
-    shuffleCards(slicedCards); //cosa ritorna questa funzione?
-    //per ogni card dentro lo slicedCards (mazzo già mescolato) creiamo l elemento e mettiamolo nella grid => <div class="card">ciao</div>
-    let gridCards = document.querySelector(".cardGame");
-    slicedCards.forEach((s,i)=>{
-        let gridElement = document.createElement("div");
-        let gridInner = document.createTextNode(s.cardId);
-        gridElement.appendChild(gridInner);
-        gridElement.className = "card";
-        gridElement.addEventListener("click", function() {
-            clickedCard(i);
-        });
-        gridElement.style.fontSize = "1px";
-        gridElement.id = i;
-        gridElement.style.backgroundImage = `url( ${s.cardImage})`;
-        gridElement.style.backgroundSize = 'contain';
-        gridElement.style.backgroundRepeat = 'no-repeat';
-        gridCards.appendChild(gridElement);
-    });
-
-    let cardElements = document.querySelectorAll(".cardGame");
-    console.log('cardElements', cardElements[0]);
-    setTimeout(() => {
-        ([...cardElements[0].children]).forEach(function (element) {
-            element.classList.add("card-flipped");
-        });
-    }, 5000);
-
-    let title = document.querySelector(".header h1");
-    switch (lvlCard) {
-        case 12:
-            title.innerHTML += `1 (${lvlCard})`;
-            break;
-        case 16:
-            title.innerHTML += `2 (${lvlCard})`;
-            break;
-        case 20:
-            title.innerHTML += `3 (${lvlCard})`;
-            gridCards.style.gridTemplateColumns = "auto auto auto auto auto"
-            break;
-        case 24:
-            title.innerHTML += `4 (${lvlCard})`;
-            gridCards.style.gridTemplateColumns ="auto auto auto auto auto auto"
-            break;
-        case 30:
-            title.innerHTML += `5 (${lvlCard})`;
-            gridCards.style.gridTemplateColumns ="auto auto auto auto auto auto"
-            break;
-        case 36:
-            title.innerHTML += `6 (${lvlCard})`;
-            gridCards.style.gridTemplateColumns ="auto auto auto auto auto auto"
-            break;
-        default:
-            break;
-    }
+    initLevel();
     checkBestScore();
-}
-
-
-function shuffleCards(array){
-    console.log("sto mescolando il mazzo", array);
-    //Durstenfeld shuffle ->ES6  (https://medium.com/@anthonyfuentes/do-the-shuffle-the-durstenfeld-shuffle-7920c2ce0c45)
-    for (let i = array.length - 1 ;i> 0; i--){
-        let j = Math.floor(Math.random()* (i+1));
-    /*
-        let tmp = array[i];
-        array[i] = array[j];
-        array[j] = tmp;
-    */
-        [array[i], array[j]] = [array[j], array[i]]
-    }
-    let shuffledDeck = array;
-    return shuffledDeck;
 }
 
 
@@ -108,6 +33,65 @@ let i = 0;
 
 /* TODO imposta al momento giusto il clearInterval(timer) per il calcolo del tempo impiegato */
 /* TODO animazione del flip mostra prima la carta "non flippata" e poi la flippa  */
+
+
+/* Funzione che crea il sottomazzo di cards, lo mescola, imposta il titolo del livello, renderizza le cards ( con le loro proprietà (clickedCard) ), dopo 5s nasconde le cards */
+function initLevel(){
+    let lvlCard = getLocalStorage("levelCards");
+
+    //mettiamo il valore di levelCard vicino al titolo Livello
+    let slicedCards = cards.slice(0,lvlCard);
+    shuffleCards(slicedCards); //cosa ritorna questa funzione => ritorna slicedCards modificato ( non una copia )
+
+    //per ogni card dentro lo slicedCards (mazzo già mescolato) creiamo l elemento e mettiamolo nella griglia del DOM
+    let gridCards = document.querySelector(".cardGame");
+
+    //prima di renderizzare tutte le card mostro il titolo del livello
+    setLevelTitle(lvlCard, gridCards);
+
+    //render cards
+    slicedCards.forEach((s,i)=>{
+        let gridElement = document.createElement("div");
+        let gridInner = document.createTextNode(s.cardId);
+        gridElement.appendChild(gridInner);
+        gridElement.className = "card";
+        gridElement.addEventListener("click", function() {
+            clickedCard(i);
+        });
+        gridElement.style.fontSize = "1px";
+        gridElement.id = i;
+        gridElement.style.backgroundImage = `url( ${s.cardImage})`;
+        gridElement.style.backgroundSize = 'contain';
+        gridElement.style.backgroundRepeat = 'no-repeat';
+        gridCards.appendChild(gridElement);
+    });
+
+    //hide cards
+    let cardElements = document.querySelectorAll(".cardGame");
+    console.log('cardElements', cardElements[0]);
+    setTimeout(() => {
+        ([...cardElements[0].children]).forEach(function (element) {        //spread operator to cycle HTMLCollections
+            element.classList.add("card-flipped");
+        });
+    }, 5000);
+
+}
+
+function shuffleCards(array){
+    console.log("sto mescolando il mazzo", array);
+    //Durstenfeld shuffle ->ES6  (https://medium.com/@anthonyfuentes/do-the-shuffle-the-durstenfeld-shuffle-7920c2ce0c45)
+    for (let i = array.length - 1 ;i> 0; i--){
+        let j = Math.floor(Math.random()* (i+1));
+    /*
+        let tmp = array[i];
+        array[i] = array[j];
+        array[j] = tmp;
+    */
+        [array[i], array[j]] = [array[j], array[i]]
+    }
+    let shuffledDeck = array;
+    return shuffledDeck;
+}
 
 function clickedCard(id){
     let card = document.getElementById(id);
@@ -182,6 +166,35 @@ function clickedCard(id){
     }
 }
 
+function setLevelTitle(lvlCard, gridCards){
+    let title = document.querySelector(".header h1");
+    switch (lvlCard) {
+        case 12:
+            title.innerHTML += `1 (${lvlCard})`;
+            break;
+        case 16:
+            title.innerHTML += `2 (${lvlCard})`;
+            break;
+        case 20:
+            title.innerHTML += `3 (${lvlCard})`;
+            gridCards.style.gridTemplateColumns = "auto auto auto auto auto"
+            break;
+        case 24:
+            title.innerHTML += `4 (${lvlCard})`;
+            gridCards.style.gridTemplateColumns ="auto auto auto auto auto auto"
+            break;
+        case 30:
+            title.innerHTML += `5 (${lvlCard})`;
+            gridCards.style.gridTemplateColumns ="auto auto auto auto auto auto"
+            break;
+        case 36:
+            title.innerHTML += `6 (${lvlCard})`;
+            gridCards.style.gridTemplateColumns ="auto auto auto auto auto auto"
+            break;
+        default:
+            break;
+    }
+}
 
 //funzione che gestisce la fine del gioco
 function checkStatusGame(index){
@@ -213,8 +226,6 @@ function checkStatusGame(index){
     //complimenti hai finito la partita
 }
 
-
-
 function saveGame(){
     let playerName = getLocalStorage("playerName"); //stringa
     let timeGame = document.querySelector("tbody tr td:nth-child(3)");    //prendiamo il valore che è stato impostato nella tabella
@@ -242,7 +253,6 @@ function saveGame(){
     window.localStorage.removeItem("matchingCards");
     setLocalStorage("savedGames", gameStrg);
 }
-
 
 function checkBestScore(){
     //per ogni elemento nel localStorage con chiave
