@@ -1,5 +1,4 @@
 import './ranklist.css';
-import logo from './assets/logo.png';
 import { getLocalStorage, setLocalStorage } from './utils/localStorageMethods';
 
 

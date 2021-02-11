@@ -1,6 +1,4 @@
 import './index.css';
-import logo from './assets/logo.png';
-import bg from './assets/bg.jpg';
 import { getLocalStorage, setLocalStorage } from './utils/localStorageMethods';
 
 var levels = [
