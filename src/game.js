@@ -231,7 +231,7 @@ function checkStatusGame(index){
         },2000);
 
         let numMoves = document.querySelector("table tbody tr td:nth-child(2)");
-        numMoves.innerHTML = index+1;
+        numMoves.innerHTML = index+1; //TODO COS
 
         //qui salviamo queste info nel localStorage come score del giocatore
         saveGame();
