@@ -70,22 +70,22 @@ window.onload = function(){
 function shuffleCards(array){
     console.log("sto mescolando il mazzo", array);
     //Durstenfeld shuffle ->ES6  (https://medium.com/@anthonyfuentes/do-the-shuffle-the-durstenfeld-shuffle-7920c2ce0c45)
-    for (var i = array.length - 1 ;i> 0; i--){
-        var j = Math.floor(Math.random()* (i+1));
+    for (let i = array.length - 1 ;i> 0; i--){
+        let j = Math.floor(Math.random()* (i+1));
     /*
-        var tmp = array[i];
+        let tmp = array[i];
         array[i] = array[j];
         array[j] = tmp;
     */
         [array[i], array[j]] = [array[j], array[i]]
     }
-    var shuffledDeck = array;
+    let shuffledDeck = array;
     return shuffledDeck;
 }
 
 
 //il timer inizia quando la pagina carica => deve partire dopo 5s
-var mytimer = setInterval(myTimer, 1000);
+let mytimer = setInterval(myTimer, 1000);
 function myTimer(){
     setTimeout(() => {
     let timerValue = document.querySelector("table tbody tr td:nth-child(3)");
@@ -102,8 +102,8 @@ window.goHomeUrDrunk = function(){
 }
 
 
-var match = [];
-var ids = [];
+let match = [];
+let ids = [];
 let i = 0;
 
 /* TODO imposta al momento giusto il clearInterval(timer) per il calcolo del tempo impiegato */
@@ -131,7 +131,7 @@ function clickedCard(id){
         }else if(match.length == 1){
             //se tolgo questo if il gioco si blocca perchè esegue riga 302
         }else{
-            var body = document.getElementsByClassName("container");
+            let body = document.getElementsByClassName("container");
 
             for (i = 0; i < body.length; i++) {
             body.item(i).style.pointerEvents = "none";
@@ -220,15 +220,16 @@ function saveGame(){
     let timeGame = document.querySelector("tbody tr td:nth-child(3)");    //prendiamo il valore che è stato impostato nella tabella
     let movesGame = document.querySelector("tbody tr td:nth-child(2)");
     let lvl = getLocalStorage("levelCards");
+    let newGame = {};
     if(playerName == null){
-        var newGame = {
+        newGame = {
             "playerName" : "-",
             "timeGame" : timeGame.innerHTML,
             "movesGame" : movesGame.innerHTML,
             "level" : lvl
         };
     }else{
-        var newGame = {
+        newGame = {
             "playerName" : playerName,
             "timeGame" : timeGame.innerHTML,
             "movesGame" : movesGame.innerHTML,
@@ -255,7 +256,7 @@ function checkBestScore(){
         console.log(g);
         if(g.playerName == playerName && g.level == level){
             scores.push(g.movesGame);
-            var min = Math.min( ...scores);
+            let min = Math.min( ...scores);
             console.log(min);
             setLocalStorage("bestScore", min);
         }

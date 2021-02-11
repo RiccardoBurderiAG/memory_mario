@@ -1,7 +1,7 @@
 import './index.css';
 import { getLocalStorage, setLocalStorage } from './utils/localStorageMethods';
 
-var levels = [
+let levels = [
     {
         id: 0,
         val: 12
