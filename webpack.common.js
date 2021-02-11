@@ -8,8 +8,8 @@ module.exports = {
         index :'./src/index.js',
         game : './src/game.js',
         ranklist: './src/ranklist.js',
-        carddata : './src/data/index.js',
-        localStorageMethods : './src/utils/localStorageMethods.js'
+        'data/carddata' : './src/data/index.js',
+        'utils/localStorageMethods' : './src/utils/localStorageMethods.js'
     },
     output: {
         filename: '[name].main.js',
