@@ -118,7 +118,7 @@ async function clickedCard(id){
         console.log(match);
 
         //controlliamo se le carte matchano
-        if(match[1] && match[0].innerHTML === match[1].innerHTML){
+        if(match[1] && match[0].innerHTML === match[1].innerHTML && match[0].id !== match[1].id){
             console.log("coppia");
             await sleep(1000);
             match.forEach(s=>{

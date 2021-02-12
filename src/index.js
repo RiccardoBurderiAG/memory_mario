@@ -80,6 +80,8 @@ window.startNewGame = function(){
     document.getElementById("nome").value = "";
     let playerName = document.querySelector("[NomeGiocatore]");
     playerName.remove();
+    let restartButton = document.querySelector("#restart");
+    restartButton.style.display = "none";   
     window.localStorage.removeItem("playerName");
     //location.reload();
 }
@@ -87,6 +89,8 @@ window.startNewGame = function(){
 function checkPlayer(){
     let player = getLocalStorage("playerName");
     if(player && player != "-"){
+        let restartButton = document.getElementById("restart");
+        restartButton.style.display = "inline";
         let formPlayer = document.querySelector("form");
         let center = document.getElementsByClassName("center");
         let playerName = document.createElement("h1");
