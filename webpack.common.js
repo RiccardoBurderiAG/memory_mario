@@ -2,7 +2,9 @@ const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 //const devMode = process.env.NODE_ENV !== 'production';
-
+const WorkboxPlugin = require('workbox-webpack-plugin');
+const { CleanWebpackPlugin } = require('clean-webpack-plugin');
+const WebpackPwaManifest = require('webpack-pwa-manifest');
 
 module.exports = {
     entry: {
@@ -69,6 +71,42 @@ module.exports = {
     ],
     },
     plugins : [
+        new CleanWebpackPlugin(),
+        new WebpackPwaManifest({
+            "short_name": "Weather",
+            "name": "Weather: Do I need an umbrella?",
+            "icons": [
+              {
+                "src": "dist/assets/16.png",
+                "type": "image/png",
+                "sizes": "192x192"
+              },
+              {
+                "src": "dist/assets/16.png",
+                "type": "image/png",
+                "sizes": "512x512"
+              }
+            ],
+            "start_url": "./",
+            "background_color": "#3367D6",
+            "display": "standalone",
+            "scope": "./dist",
+            "theme_color": "#3367D6",
+            "shortcuts": [],
+            "description": "Weather forecast information",
+            "screenshots": [
+              {
+                "src": "dist/assets/screenshot1.png",
+                "type": "image/png",
+                "sizes": "540x720"
+              },
+              {
+                "src": "dist/assets/screenshot2.png",
+                "type": "image/png",
+                "sizes": "540x720"
+              }
+            ]
+          }),
         new MiniCssExtractPlugin(
             {
                 filename: '[name].css',
@@ -88,7 +126,13 @@ module.exports = {
         filename: 'ranklist.html',
         template: 'src/ranklist.html',
         chunks: ['ranklist']
-      })
+      }),
+      new WorkboxPlugin.GenerateSW({
+        // these options encourage the ServiceWorkers to get in there fast
+        // and not allow any straggling "old" SWs to hang around
+        clientsClaim: true,
+        skipWaiting: true,
+      }),
     ]
 }
 
