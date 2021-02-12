@@ -30,7 +30,7 @@ window.goHomeUrDrunk = function(){
 
 let match = [];
 let ids = [];
-let i = 0;
+let moves = 0;
 
 /* TODO imposta al momento giusto il clearInterval(timer) per il calcolo del tempo impiegato */
 /* TODO animazione del flip mostra prima la carta "non flippata" e poi la flippa  */
@@ -77,13 +77,13 @@ function initLevel(){
 
 }
 
+//function that shuffle the deck using Durstenfeld algorythm->ES6  (https://medium.com/@anthonyfuentes/do-the-shuffle-the-durstenfeld-shuffle-7920c2ce0c45)
 function shuffleCards(array){
     let shuffledDeck = [ ...array]; //in questo modo lavoro su una copia dell array principale (immutabilità delle risorse)
     console.log("sto mescolando il mazzo", array);
-    //Durstenfeld shuffle ->ES6  (https://medium.com/@anthonyfuentes/do-the-shuffle-the-durstenfeld-shuffle-7920c2ce0c45)
     for (let i = shuffledDeck.length - 1 ;i> 0; i--){
         let j = Math.floor(Math.random()* (i+1));
-    /*
+    /* before ES6:
         let tmp = shuffledDeck[i];
         shuffledDeck[i] = shuffledDeck[j];
         shuffledDeck[j] = tmp;
@@ -93,22 +93,65 @@ function shuffleCards(array){
     return shuffledDeck;
 }
 
-function clickedCard(id){
-    let card = document.getElementById(id);
-    card.classList.remove("card-flipped");
-    console.log('card', card);
-    if(match.length == 2){
-        match = []; //così avremo sempre al massimo due elementi
+function sleep(ms) {
+    return new Promise(resolve => setTimeout(resolve, ms));
+}
+
+async function clickedCard(id){
+    //caso in cui è stata già cliccata una carta
+    let body = document.getElementsByClassName("container");
+    if(match.length == 1){
+
+        for (let i = 0; i < body.length; i++) {
+            body.item(i).style.pointerEvents = "none";
+        }
+
+        let card = document.getElementById(id);
+        card.classList.remove("card-flipped");
+        console.log('card', card);
+        moves++; //se ho cliccato una carta ho fatto una mossa
         match.push(card);
-    }else{
-        match.push(card);
+        console.log(match);
+
+        //controlliamo se le carte matchano
         if(match[1] && match[0].innerHTML === match[1].innerHTML){
             console.log("coppia");
+            await sleep(1000);
             match.forEach(s=>{
                 let x = document.getElementById(s.id);
                 x.classList.add("flipped");
             })
+            for (let i = 0; i < body.length; i++) {
+                body.item(i).style.pointerEvents = "auto";
+            }
+        }else{
+            //wait 3s then flip back cards
+            console.log("coppia sbagliata");
+            console.log(parseInt(match[0].id));
+            let id0 = parseInt(match[0].id);
+            let id1 = parseInt(match[1].id);
+            setTimeout(() => {
+                console.log(id0, id1);
+                let card0 = document.getElementById(id0);
+                let card1 = document.getElementById(id1);
+                card0.classList.add("card-flipped");
+                card1.classList.add("card-flipped");
+                for (let i = 0; i < body.length; i++) {
+                    body.item(i).style.pointerEvents = "auto";
+                }
+            }, 3000);
+
         }
+
+        //reset di match
+        match = []; //così avremo sempre al massimo due elementi
+    }else{  //caso in cui non è stata cliccata nessuna carta
+        let card = document.getElementById(id);
+        card.classList.remove("card-flipped");
+        console.log('card', card);
+        moves++; //se ho cliccato una carta ho fatto una mossa
+        match.push(card);
+        console.log(match);
     }
 /*
     if(match.length == 2){
@@ -181,6 +224,7 @@ function clickedCard(id){
     } */
 }
 
+//function that sets the title of the level
 function setLevelTitle(lvlCard, gridCards){
     let title = document.querySelector(".header h1");
     switch (lvlCard) {
@@ -211,7 +255,7 @@ function setLevelTitle(lvlCard, gridCards){
     }
 }
 
-//funzione che gestisce la fine del gioco chiamata dentro clickedCards
+//function that handles the end of the game( called inside clickedCards)
 function checkStatusGame(index){
     let lvl = getLocalStorage("levelCards");
     let cards = document.querySelectorAll(".cardGame .flipped");
@@ -232,8 +276,9 @@ function checkStatusGame(index){
         },2000);
 
         let numMoves = document.querySelector("table tbody tr td:nth-child(2)");
-        numMoves.innerHTML = index+1; //TODO COS
-
+        //TODO COS ->
+        //index che viene da 'i' rappresenta il numero di mosse che sono state fatte, quindi quando clicco una carta devo incrementare 'i' per avere il valore aggiornato
+        numMoves.innerHTML = index+1;
         //qui salviamo queste info nel localStorage come score del giocatore
         saveGame();
         checkBestScore();
