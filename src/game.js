@@ -9,31 +9,31 @@ window.onload = function(){
     checkBestScore();
 }
 
-
-//il timer inizia quando la pagina carica => deve partire dopo 5s
-let mytimer = setInterval(myTimer, 1000);
-function myTimer(){
-    setTimeout(() => {
-    let timerValue = document.querySelector("table tbody tr td:nth-child(3)");
-    let tmp = JSON.parse(timerValue.innerHTML);
-    tmp++;
-    timerValue.innerHTML = JSON.stringify(tmp);
-}, 5000);
-
-}
-
-
 window.goHomeUrDrunk = function(){
     window.location.href = "./index.html"
 }
 
+//il timer inizia quando la pagina carica => deve partire dopo 5s
+let mytimer = setInterval(myTimer, 1000);
+async function myTimer(){
+    await sleep(5000);
+    let timerValue = document.querySelector("table tbody tr td:nth-child(3)");
+    let tmp = JSON.parse(timerValue.innerHTML);
+    tmp++;
+    timerValue.innerHTML = JSON.stringify(tmp);
+}
 
-let match = [];
-let ids = [];
-let moves = 0;
+//però il timer si blocca dopo 5s
 
-/* TODO imposta al momento giusto il clearInterval(timer) per il calcolo del tempo impiegato */
-/* TODO animazione del flip mostra prima la carta "non flippata" e poi la flippa  */
+
+function sleep(ms) {
+    return new Promise(resolve => setTimeout(resolve, ms));
+}
+
+
+
+let match = [];     //array che conterrà le carte su cui fare il controllo di match
+let moves = 0;      //integer che rappresenta il numero di volte che hai toccato una carta
 
 /* Funzione che crea il sottomazzo di cards, lo mescola, imposta il titolo del livello, renderizza le cards ( con le loro proprietà (clickedCard) ), dopo 5s nasconde le cards */
 function initLevel(){
@@ -93,13 +93,15 @@ function shuffleCards(array){
     return shuffledDeck;
 }
 
-function sleep(ms) {
-    return new Promise(resolve => setTimeout(resolve, ms));
-}
 
+
+//TODO clearInterval (timer) al momento giusto => prima di far apparire congrat al posto delle card, o subito dopo aver cliccato le ultime due carte matchate
 async function clickedCard(id){
     //caso in cui è stata già cliccata una carta
     let body = document.getElementsByClassName("container");
+
+    moves++; //ogni volta che clicchiamo una carta abbiamo fatto una mossa
+
     if(match.length == 1){
 
         for (let i = 0; i < body.length; i++) {
@@ -109,7 +111,6 @@ async function clickedCard(id){
         let card = document.getElementById(id);
         card.classList.remove("card-flipped");
         console.log('card', card);
-        moves++; //se ho cliccato una carta ho fatto una mossa
         match.push(card);
         console.log(match);
 
@@ -149,79 +150,17 @@ async function clickedCard(id){
         let card = document.getElementById(id);
         card.classList.remove("card-flipped");
         console.log('card', card);
-        moves++; //se ho cliccato una carta ho fatto una mossa
         match.push(card);
         console.log(match);
     }
-/*
-    if(match.length == 2){
-        //flippa la card
-        card.classList.remove("card-flipped");
-        match = [];
-        let clicked1 = document.getElementById(id);
-        match.push(clicked1.innerHTML);
-        i++;
-    }else{
-        let card = document.getElementById(id);
-        //flippa la card
-        card.classList.remove("card-flipped");
-        let clicked1 = document.getElementById(id);
-        match.push(clicked1.innerHTML);
-        i++;
-        if(!isNaN(match[1]) && match[0] === match[1]){
-            console.log("coppia trovata");
-        }else if(match.length == 1){
-            //se tolgo questo if il gioco si blocca perchè esegue riga 302
-        }else{
-            let body = document.getElementsByClassName("container");
+    let matchedCards = document.querySelectorAll(".card-flipped");
+    console.log(matchedCards.length);
 
-            for (i = 0; i < body.length; i++) {
-            body.item(i).style.pointerEvents = "none";
-            }
-            setTimeout(function(){
-                 if(match.length == 2 && match[0] != match[1]){
-                    strgCards[1].forEach(s=>{
-                        document.getElementsByClassName("card-flipped").pointerEvent = "none";
-                        console.log(document.getElementsByClassName("card-flipped"));
-                        let x = document.getElementById(s);
-                        x.classList.add("card-flipped");
-                        for (i = 0; i < body.length; i++) {
-                            body.item(i).style.pointerEvents = "auto";
-                        }
-                    })
-                }
-            }, 3000);
-
-        }
+    //chiamiamo la funzione che gestisce la fine della partita se non ci sono più elementi con classe card-flipped
+    if(matchedCards.length === 0){
+        clearInterval(mytimer);
+        checkStatusGame(moves);
     }
-    if(ids.length == 2 ){
-        ids = [];
-    }
-    ids.push(id);
-    setLocalStorage("matchingCards",[match,ids]);
-    //dopo aver settato nel local storage il riferimento all elemento tramite id possiamo prendere tutti gli elementi con quell id e aggiungere classi in modo dinamico
-    let strgCards = getLocalStorage("matchingCards");
-    setTimeout(function(){
-        if(match[0] === match[1] && ids[0] !== ids[1]){
-            //prendiamo gli elementi che hanno id = id salvati in ids(localstorage)
-            //in strgCards[1] stanno gli indici delle carte che ho matchato
-            strgCards[1].forEach(s=>{
-                let x = document.getElementById(s);
-                x.classList.add("flipped");
-            })
-        }
-    }, 1000);
-
-    console.log(document.getElementById("container"));
-    //document.getElementById("container")[0].children.style.pointerEvents = "none";
-    if(match.length == 2){
-        checkStatusGame(i);
-        let lvl = getLocalStorage("levelCards");
-        let cards = document.querySelectorAll(".cardGame .flipped");
-        if(cards.length == lvl -2){
-            clearInterval(mytimer);
-        }
-    } */
 }
 
 //function that sets the title of the level
@@ -259,8 +198,8 @@ function setLevelTitle(lvlCard, gridCards){
 function checkStatusGame(index){
     let lvl = getLocalStorage("levelCards");
     let cards = document.querySelectorAll(".cardGame .flipped");
-    if(cards.length == lvl -2){     //l operazione di sottrazione potrebbe essere dovuta al fatto che ignora le ultime due carte cliccate
-        clearInterval(mytimer);
+
+    if(cards.length === lvl){     //l operazione di sottrazione potrebbe essere dovuta al fatto che ignora le ultime due carte cliccate
         let cardGame = document.getElementsByClassName("cardGame");
         let congrat = document.createElement("div");
         //trasformiamo congratText in un immagine
@@ -276,9 +215,7 @@ function checkStatusGame(index){
         },2000);
 
         let numMoves = document.querySelector("table tbody tr td:nth-child(2)");
-        //TODO COS ->
-        //index che viene da 'i' rappresenta il numero di mosse che sono state fatte, quindi quando clicco una carta devo incrementare 'i' per avere il valore aggiornato
-        numMoves.innerHTML = index+1;
+        numMoves.innerHTML = index;
         //qui salviamo queste info nel localStorage come score del giocatore
         saveGame();
         checkBestScore();

@@ -1,4 +1,6 @@
 import './ranklist.css';
+import './index.css';
+
 import { getLocalStorage, setLocalStorage } from './utils/localStorageMethods';
 
 
@@ -8,7 +10,6 @@ let playersScore = getLocalStorage("savedGames");
 window.onload = function(){
     createRankTable()
 }
-
 
 function createRankTable(){
     let tableBody = document.getElementsByClassName("ranklist");
