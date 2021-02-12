@@ -1,6 +1,7 @@
 import './game.css';
 import './index.css';
 import cards from './data';
+
 import { getLocalStorage, setLocalStorage } from './utils/localStorageMethods';
 
 window.onload = function(){

@@ -16,6 +16,10 @@ import card15 from '../assets/15.png';
 import card16 from '../assets/16.png';
 import card17 from '../assets/17.png';
 import card18 from '../assets/18.png';
+import end from '../assets/end.jpg';
+import logo from '../assets/logo.png';
+
+export {end, logo};
 
 const cards = [
     {
