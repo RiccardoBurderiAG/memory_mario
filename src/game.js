@@ -14,6 +14,7 @@ window.goHomeUrDrunk = function(){
 }
 
 //il timer inizia quando la pagina carica => deve partire dopo 5s
+//però quando chiamiamo clearInterval vengono attesi questi 5s
 let mytimer = setInterval(myTimer, 1000);
 async function myTimer(){
     await sleep(5000);
@@ -22,9 +23,6 @@ async function myTimer(){
     tmp++;
     timerValue.innerHTML = JSON.stringify(tmp);
 }
-
-//però il timer si blocca dopo 5s
-
 
 function sleep(ms) {
     return new Promise(resolve => setTimeout(resolve, ms));
@@ -97,11 +95,11 @@ function shuffleCards(array){
 
 //TODO clearInterval (timer) al momento giusto => prima di far apparire congrat al posto delle card, o subito dopo aver cliccato le ultime due carte matchate
 async function clickedCard(id){
-    //caso in cui è stata già cliccata una carta
     let body = document.getElementsByClassName("container");
 
     moves++; //ogni volta che clicchiamo una carta abbiamo fatto una mossa
 
+    //caso in cui è stata già cliccata una carta
     if(match.length == 1){
 
         for (let i = 0; i < body.length; i++) {
@@ -153,12 +151,11 @@ async function clickedCard(id){
         match.push(card);
         console.log(match);
     }
-    let matchedCards = document.querySelectorAll(".card-flipped");
-    console.log(matchedCards.length);
 
     //chiamiamo la funzione che gestisce la fine della partita se non ci sono più elementi con classe card-flipped
+    let matchedCards = document.querySelectorAll(".card-flipped");
     if(matchedCards.length === 0){
-        clearInterval(mytimer);
+        window.clearInterval(mytimer);  //vogliamo che l intervallo sia bloccato immediatamnente
         checkStatusGame(moves);
     }
 }
