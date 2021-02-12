@@ -4,6 +4,11 @@ import cards from './data';
 
 import { getLocalStorage, setLocalStorage } from './utils/localStorageMethods';
 
+
+let match = [];     //array che conterrà le carte su cui fare il controllo di match
+let moves = 0;      //integer che rappresenta il numero di volte che hai toccato una carta
+
+
 window.onload = function(){
     initLevel();
     checkBestScore();
@@ -15,9 +20,12 @@ window.goHomeUrDrunk = function(){
 
 //il timer inizia quando la pagina carica => deve partire dopo 5s
 //però quando chiamiamo clearInterval vengono attesi questi 5s
-let mytimer = setInterval(myTimer, 1000);
-async function myTimer(){
-    await sleep(5000);
+let mytimer;
+let mytimeout = setTimeout(() => {
+    mytimer = setInterval(myTimer, 1000)
+}, 5000);
+
+function myTimer(){
     let timerValue = document.querySelector("table tbody tr td:nth-child(3)");
     let tmp = JSON.parse(timerValue.innerHTML);
     tmp++;
@@ -29,9 +37,6 @@ function sleep(ms) {
 }
 
 
-
-let match = [];     //array che conterrà le carte su cui fare il controllo di match
-let moves = 0;      //integer che rappresenta il numero di volte che hai toccato una carta
 
 /* Funzione che crea il sottomazzo di cards, lo mescola, imposta il titolo del livello, renderizza le cards ( con le loro proprietà (clickedCard) ), dopo 5s nasconde le cards */
 function initLevel(){
@@ -155,7 +160,7 @@ async function clickedCard(id){
     //chiamiamo la funzione che gestisce la fine della partita se non ci sono più elementi con classe card-flipped
     let matchedCards = document.querySelectorAll(".card-flipped");
     if(matchedCards.length === 0){
-        window.clearInterval(mytimer);  //vogliamo che l intervallo sia bloccato immediatamnente
+        clearInterval(mytimer);  //vogliamo che l intervallo sia bloccato immediatamnente
         checkStatusGame(moves);
     }
 }
@@ -257,7 +262,7 @@ function checkBestScore(){
     let scores = [];
     //preso il valore di playerName, per ogni elemento in savedGames con name = playerName calcoliamo il maxScore di quel giocatore
     games.forEach(g =>{
-        console.log(g);
+        //console.log(g);
         if(g.playerName == playerName && g.level == level){
             scores.push(g.movesGame);
             let min = Math.min( ...scores);
