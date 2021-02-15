@@ -1,0 +1,34 @@
+table{
+    width: 83%;
+    margin: auto;
+    margin-top: 25px;
+    border-collapse: collapse;
+}
+
+table td, table th {
+  border: 1px solid #ddd;
+  padding: 8px;
+}
+
+table tr:nth-child(even){background-color: #f2f2f2;}
+
+table tbody tr{background-color: #ddd;}
+
+table thead {
+  padding-top: 12px;
+  padding-bottom: 12px;
+  text-align: left;
+  background-color: #4CAF50;
+  color: white;
+}
+
+.center{
+  display: flex;
+  justify-content: flex-start;
+  flex-direction: column;
+}
+
+h1{
+  margin: 10px auto;
+  color: white;
+}

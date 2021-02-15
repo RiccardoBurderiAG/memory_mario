@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Memory-Game</title>
+    <link rel="stylesheet" href="index.css" type="text/css">
+    <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css" integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p" crossorigin="anonymous"/>
+</head>
+<body>
+    <!-- header section -->
+    <div class="navbar">
+        <img id="logo" src="./assets/logo.png" alt="">
+        <a href="./index.html"><h2 id="titleApp">Magic Memory</h2></a>
+    </div>
+    <!-- hero Section -->
+    <div class="container">
+        <div class="center">
+            <form action="" id="playerName" name="playerName">
+                <label for="nome">Nome</label>
+                <input type="text" name="nome" id="nome">
+                <button type="button" onclick="savePlayer()">Salva</button>
+            </form>
+            <button type="button" onclick="startNewGame()" id="restart">Restart</button>
+        </div>
+        <div class="levels">
+        </div>
+    </div>
+</body>
+</html>
