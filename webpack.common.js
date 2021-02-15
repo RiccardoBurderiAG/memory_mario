@@ -1,10 +1,8 @@
 const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
-//const devMode = process.env.NODE_ENV !== 'production';
 const WorkboxPlugin = require('workbox-webpack-plugin');
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
-const WebpackPwaManifest = require('webpack-pwa-manifest');
 
 module.exports = {
     entry: {
@@ -73,29 +71,6 @@ module.exports = {
     },
     plugins : [
         new CleanWebpackPlugin(),
-        new WebpackPwaManifest({
-            "filename" : "manifest.json",
-            "short_name": "Magic Memory",
-            "name": "Magic Memory: will you beat me?",
-            "icons": [
-                {
-                    src: path.resolve('src/assets/16.png'),
-                    "type": "image/png",
-                    "sizes": "192x192"
-                },
-                {
-                    src: path.resolve('src/assets/16.png'),
-                    "type": "image/png",
-                    "sizes": "144x144"
-                }
-            ],
-            "background_color": "#3367D6",
-            "display": "standalone",
-            "theme_color": "#3367D6",
-            "description": "Magic Memory forecast information",
-            "start_url" : "/dist/index.html",
-            "scope" : "/dist/"
-        }),
         new MiniCssExtractPlugin(
             {
                 filename: '[name].css',
