@@ -15,6 +15,7 @@ module.exports = {
         'utils/localStorageMethods' : './src/utils/localStorageMethods.js'
     },
     output: {
+        publicPath : "",
         filename: '[name].main.js',
         path: path.resolve(__dirname, 'dist')
     },
@@ -73,66 +74,53 @@ module.exports = {
     plugins : [
         new CleanWebpackPlugin(),
         new WebpackPwaManifest({
-            "short_name": "Weather",
-            "name": "Weather: Do I need an umbrella?",
+            "filename" : "manifest.json",
+            "short_name": "Magic Memory",
+            "name": "Magic Memory: will you beat me?",
             "icons": [
-              {
-                "src": "dist/assets/16.png",
-                "type": "image/png",
-                "sizes": "192x192"
-              },
-              {
-                "src": "dist/assets/16.png",
-                "type": "image/png",
-                "sizes": "512x512"
-              }
+                {
+                    src: path.resolve('src/assets/16.png'),
+                    "type": "image/png",
+                    "sizes": "192x192"
+                },
+                {
+                    src: path.resolve('src/assets/16.png'),
+                    "type": "image/png",
+                    "sizes": "144x144"
+                }
             ],
-            "start_url": "./",
             "background_color": "#3367D6",
             "display": "standalone",
-            "scope": "./dist",
             "theme_color": "#3367D6",
-            "shortcuts": [],
-            "description": "Weather forecast information",
-            "screenshots": [
-              {
-                "src": "dist/assets/screenshot1.png",
-                "type": "image/png",
-                "sizes": "540x720"
-              },
-              {
-                "src": "dist/assets/screenshot2.png",
-                "type": "image/png",
-                "sizes": "540x720"
-              }
-            ]
-          }),
+            "description": "Magic Memory forecast information",
+            "start_url" : "/dist/index.html",
+            "scope" : "/dist/"
+        }),
         new MiniCssExtractPlugin(
             {
                 filename: '[name].css',
-            }
-        ),
+        }),
         new HtmlWebpackPlugin({
         filename: 'index.html',
         template: 'src/index.html',
         chunks: ['index']
-      }),
-      new HtmlWebpackPlugin({
-        filename: 'game.html',
-        template: 'src/game.html',
-        chunks: ['game']
-      }),
-      new HtmlWebpackPlugin({
-        filename: 'ranklist.html',
-        template: 'src/ranklist.html',
-        chunks: ['ranklist']
-      }),
-      new WorkboxPlugin.GenerateSW({
-        // these options encourage the ServiceWorkers to get in there fast
-        // and not allow any straggling "old" SWs to hang around
-        clientsClaim: true,
-        skipWaiting: true,
-      }),
+        }),
+        new HtmlWebpackPlugin({
+            filename: 'game.html',
+            template: 'src/game.html',
+            chunks: ['game']
+        }),
+        new HtmlWebpackPlugin({
+            filename: 'ranklist.html',
+            template: 'src/ranklist.html',
+            chunks: ['ranklist']
+        }),
+        new WorkboxPlugin.GenerateSW({
+            // these options encourage the ServiceWorkers to get in there fast
+            // and not allow any straggling "old" SWs to hang around
+            clientsClaim: true,
+            skipWaiting: true,
+        }),
     ]
 }
 
@@ -170,6 +158,31 @@ module.exports = {
     ],
     },
     plugins : [
+         new WebpackPwaManifest({
+            "filename" : "manifest.json",
+            "short_name": "Magic Memory",
+            "name": "Magic Memory: will you beat me?",
+            "icons": [
+                {
+                    src: path.resolve('src/assets/16.png'),
+                    "type": "image/png",
+                    "sizes": "192x192",
+                    "destination" : "assets/"
+                },
+                {
+                    src: path.resolve('src/assets/16.png'),
+                    "type": "image/png",
+                    "sizes": "144x144",
+                    "destination" : "assets/"
+                }
+            ],
+            "background_color": "#3367D6",
+            "display": "standalone",
+            "theme_color": "#3367D6",
+            "description": "Magic Memory forecast information",
+            "start_url" : "/dist",
+            "scope" : "/"
+          }),
         new MiniCssExtractPlugin(
             {
                 filename: '[name].css',
